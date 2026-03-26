@@ -1,0 +1,28 @@
+aid: sigstore
+name: Sigstore
+description: >-
+  Sigstore is a set of free-to-use open source tools for signing, verifying, and protecting software supply chain artifacts.
+type: Index
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+tags:
+  - Containers
+url: >-
+  https://raw.githubusercontent.com/api-evangelist/sigstore/refs/heads/main/apis.yml
+created: '2026-03-26'
+modified: '2026-03-26'
+specificationVersion: '0.19'
+apis:
+  - aid: sigstore:sigstore
+    name: Sigstore
+    description: >-
+      Sigstore is a set of free-to-use open source tools for signing, verifying, and protecting software supply chain artifacts.
+    humanURL: https://github.com/api-evangelist/sigstore
+    tags:
+      - Containers
+    properties: []
+common:
+  - type: Website
+    url: https://github.com/api-evangelist/sigstore
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com
