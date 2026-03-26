@@ -1,11 +1,19 @@
 aid: sigstore
 name: Sigstore
 description: >-
-  Sigstore is a set of free-to-use open source tools for signing, verifying, and protecting software supply chain artifacts.
+  Sigstore is a set of free-to-use open source tools for signing, verifying,
+  and protecting software supply chain artifacts. It provides a transparent
+  and auditable signing infrastructure that eliminates the need for managing
+  signing keys, making software supply chain security more accessible.
 type: Index
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 tags:
   - Containers
+  - Security
+  - Code Signing
+  - Supply Chain
+  - Transparency
+  - Open Source
 url: >-
   https://raw.githubusercontent.com/api-evangelist/sigstore/refs/heads/main/apis.yml
 created: '2026-03-26'
@@ -15,14 +23,33 @@ apis:
   - aid: sigstore:sigstore
     name: Sigstore
     description: >-
-      Sigstore is a set of free-to-use open source tools for signing, verifying, and protecting software supply chain artifacts.
-    humanURL: https://github.com/api-evangelist/sigstore
+      Sigstore is a set of free-to-use open source tools for signing, verifying,
+      and protecting software supply chain artifacts. The project includes
+      Cosign for container signing, Fulcio for certificate authority, and Rekor
+      for transparency logs.
+    humanURL: https://www.sigstore.dev/
     tags:
       - Containers
-    properties: []
+      - Security
+      - Code Signing
+      - Supply Chain
+      - Transparency
+    properties:
+      - type: Documentation
+        url: https://docs.sigstore.dev/
+      - type: Getting Started
+        url: https://docs.sigstore.dev/quickstart/quickstart-cosign/
 common:
   - type: Website
-    url: https://github.com/api-evangelist/sigstore
+    url: https://www.sigstore.dev/
+  - type: Documentation
+    url: https://docs.sigstore.dev/
+  - type: Getting Started
+    url: https://docs.sigstore.dev/quickstart/quickstart-cosign/
+  - type: GitHub Organization
+    url: https://github.com/sigstore
+  - type: Blog
+    url: https://blog.sigstore.dev/
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
