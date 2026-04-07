@@ -8,12 +8,12 @@ description: >-
 type: Index
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 tags:
-  - Containers
-  - Security
   - Code Signing
+  - Containers
+  - Open Source
+  - Security
   - Supply Chain
   - Transparency
-  - Open Source
 url: >-
   https://raw.githubusercontent.com/api-evangelist/sigstore/refs/heads/main/apis.yml
 created: '2026-03-26'
@@ -29,9 +29,9 @@ apis:
       for transparency logs.
     humanURL: https://www.sigstore.dev/
     tags:
+      - Code Signing
       - Containers
       - Security
-      - Code Signing
       - Supply Chain
       - Transparency
     properties:
