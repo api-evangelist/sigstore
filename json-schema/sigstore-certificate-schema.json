@@ -1,0 +1,52 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/sigstore/refs/heads/main/json-schema/sigstore-certificate-schema.json",
+  "title": "Sigstore Fulcio Signing Certificate",
+  "description": "Schema representing a short-lived signing certificate issued by Fulcio CA.",
+  "type": "object",
+  "properties": {
+    "signedCertificateEmbeddedSct": {
+      "type": "object",
+      "description": "Certificate response with an embedded SCT (Signed Certificate Timestamp).",
+      "properties": {
+        "chain": {
+          "type": "object",
+          "description": "Certificate chain from the issued certificate to the root.",
+          "properties": {
+            "certificates": {
+              "type": "array",
+              "description": "DER-encoded X.509 certificates in the chain.",
+              "items": {
+                "type": "string",
+                "format": "byte"
+              }
+            }
+          }
+        }
+      }
+    },
+    "signedCertificateDetachedSct": {
+      "type": "object",
+      "description": "Certificate response with a detached SCT.",
+      "properties": {
+        "chain": {
+          "type": "object",
+          "properties": {
+            "certificates": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "format": "byte"
+              }
+            }
+          }
+        },
+        "signedCertificateTimestamp": {
+          "type": "string",
+          "format": "byte",
+          "description": "The detached Signed Certificate Timestamp."
+        }
+      }
+    }
+  }
+}

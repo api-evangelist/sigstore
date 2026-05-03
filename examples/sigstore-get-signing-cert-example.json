@@ -1,0 +1,38 @@
+{
+  "example": "Request a short-lived signing certificate from Fulcio",
+  "request": {
+    "method": "POST",
+    "path": "/api/v2/signingCert",
+    "url": "https://fulcio.sigstore.dev/api/v2/signingCert",
+    "headers": {
+      "Authorization": "Bearer <OIDC-ID-TOKEN>",
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "credentials": {
+        "oidcIdentityToken": "<OIDC-ID-TOKEN>"
+      },
+      "publicKeyRequest": {
+        "publicKey": {
+          "algorithm": "ECDSA",
+          "content": "LS0tLS1CRUdJTiBQVUJMSUMgS0VZLS0tLS0K...<base64-encoded-public-key>"
+        },
+        "proofOfPossession": "MEYCIQCx...<base64-encoded-signature-of-email>"
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "signedCertificateEmbeddedSct": {
+        "chain": {
+          "certificates": [
+            "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0t...<leaf-cert>",
+            "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0t...<intermediate-cert>",
+            "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0t...<root-cert>"
+          ]
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "schema": "https://schema.org/",
+    "sigstore": "https://sigstore.dev/vocab/",
+    "sec": "https://w3id.org/security#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+
+    "LogEntry": "sigstore:LogEntry",
+    "TrustBundle": "sigstore:TrustBundle",
+    "Certificate": "sec:Certificate",
+    "PublicKey": "sec:publicKey",
+    "InclusionProof": "sigstore:InclusionProof",
+    "SignedEntryTimestamp": "sigstore:SignedEntryTimestamp",
+    "TransparencyLog": "sigstore:TransparencyLog",
+    "CertificateAuthority": "sigstore:CertificateAuthority",
+
+    "uuid": "@id",
+    "body": "sigstore:entryBody",
+    "integratedTime": {
+      "@id": "sigstore:integratedTime",
+      "@type": "xsd:integer"
+    },
+    "logID": "sigstore:logID",
+    "logIndex": "sigstore:logIndex",
+    "verification": "sigstore:verification",
+    "inclusionProof": "sigstore:inclusionProof",
+    "signedEntryTimestamp": "sigstore:signedEntryTimestamp",
+    "checkpoint": "sigstore:checkpoint",
+    "hashes": "sigstore:hashes",
+    "rootHash": "sigstore:rootHash",
+    "treeSize": "sigstore:treeSize",
+
+    "certificates": "sec:certificate",
+    "algorithm": "sec:algorithm",
+    "key": "sec:key",
+    "issuer": "schema:issuer",
+
+    "artifactHash": "sigstore:artifactHash",
+    "artifactType": "sigstore:artifactType",
+    "signature": "sec:signature",
+    "publicKey": "sec:publicKey",
+
+    "oidcIssuer": "sigstore:oidcIssuer",
+    "subjectAlternativeName": "sigstore:subjectAlternativeName",
+
+    "host": "schema:url",
+    "timestamp": {
+      "@id": "schema:DateTime",
+      "@type": "xsd:dateTime"
+    }
+  }
+}

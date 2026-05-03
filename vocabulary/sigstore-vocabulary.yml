@@ -1,0 +1,149 @@
+name: Sigstore Vocabulary
+description: >-
+  Vocabulary and taxonomy for the Sigstore ecosystem of software supply chain
+  security tools including Rekor transparency log, Fulcio certificate authority,
+  and Cosign artifact signing.
+version: '1.0'
+created: '2026-05-02'
+modified: '2026-05-02'
+
+domains:
+  - name: Transparency Log
+    description: The immutable, append-only log of all signing events (Rekor).
+    terms:
+      - name: Log Entry
+        label: Log Entry
+        description: >-
+          A record in the Rekor transparency log containing the signed artifact hash,
+          public key, signature, and integrated timestamp.
+      - name: Log Index
+        label: Log Index
+        description: The sequential position of an entry in the transparency log.
+      - name: Log ID
+        label: Log ID
+        description: SHA256 hash of the log's public key, uniquely identifying a log instance.
+      - name: Inclusion Proof
+        label: Inclusion Proof
+        description: >-
+          A Merkle tree proof demonstrating that a specific entry is included in the log
+          at a given tree size.
+      - name: Signed Entry Timestamp
+        label: Signed Entry Timestamp
+        description: >-
+          The log's cryptographic signature over the entry body and integration timestamp,
+          proving the entry was accepted by the log at that time.
+      - name: Checkpoint
+        label: Checkpoint
+        description: A signed tree head that commits to the log's current state.
+      - name: Root Hash
+        label: Root Hash
+        description: The Merkle root hash representing the current state of the log tree.
+      - name: Tree Size
+        label: Tree Size
+        description: The total number of entries in the log at a given checkpoint.
+      - name: UUID
+        label: Entry UUID
+        description: The unique identifier for a log entry, derived from the leaf hash.
+
+  - name: Certificate Authority
+    description: Fulcio's role in issuing short-lived signing certificates.
+    terms:
+      - name: Signing Certificate
+        label: Signing Certificate
+        description: >-
+          A short-lived X.509 certificate issued by Fulcio that binds a signer's
+          identity (from OIDC token) to a public key.
+      - name: Trust Bundle
+        label: Trust Bundle
+        description: The collection of root certificates that form the Fulcio CA trust chain.
+      - name: Signed Certificate Timestamp
+        label: Signed Certificate Timestamp
+        description: >-
+          A Certificate Transparency (CT) log proof that the signing certificate
+          was submitted to a public CT log.
+      - name: OIDC Token
+        label: OIDC Identity Token
+        description: >-
+          An OpenID Connect identity token used to authenticate the signer to Fulcio.
+          The identity in the token becomes the Subject Alternative Name of the certificate.
+      - name: Subject Alternative Name
+        label: Subject Alternative Name
+        description: The signer's identity embedded in the certificate (email, GitHub Actions workflow URL, etc.).
+
+  - name: Artifact Signing
+    description: The process of cryptographically signing software artifacts.
+    terms:
+      - name: Cosign
+        label: Cosign
+        description: >-
+          The Sigstore tool for signing container images and other OCI/non-OCI artifacts.
+          Supports keyless signing (using OIDC + Fulcio + Rekor) and key-based signing.
+      - name: Keyless Signing
+        label: Keyless Signing
+        description: >-
+          A signing approach where no long-lived private keys are managed by the signer.
+          Instead, short-lived certificates from Fulcio are used and the signing event
+          is recorded in Rekor.
+      - name: Artifact Hash
+        label: Artifact Hash
+        description: A SHA256 digest of the software artifact being signed, referenced in the log entry.
+      - name: Signature
+        label: Digital Signature
+        description: The cryptographic signature over the artifact hash using the signer's private key.
+      - name: Policy Controller
+        label: Policy Controller
+        description: >-
+          A Kubernetes admission controller that enforces image signature verification
+          policies, ensuring only signed images from trusted sources are deployed.
+
+  - name: Verification
+    description: Mechanisms for verifying signed artifacts and log entries.
+    terms:
+      - name: Bundle
+        label: Sigstore Bundle
+        description: >-
+          A portable JSON file containing all the data needed to offline-verify a
+          signed artifact: the certificate, signature, and Rekor log entry.
+      - name: Verify
+        label: Verify
+        description: >-
+          The process of checking that a signature is valid, the certificate is trusted,
+          and the signing event is recorded in Rekor.
+      - name: Policy
+        label: Verification Policy
+        description: >-
+          Rules defining what makes a signature valid (e.g., expected OIDC issuer,
+          expected subject, certificate identity).
+
+  - name: Ecosystem Tools
+    description: Related tools and integrations in the Sigstore ecosystem.
+    terms:
+      - name: Gitsign
+        label: Gitsign
+        description: Keyless Git commit signing using Sigstore.
+      - name: Sigstore Policy Controller
+        label: Policy Controller
+        description: Kubernetes admission webhook for enforcing signature verification policies.
+      - name: Sigstore Go
+        label: sigstore-go
+        description: The official Go client library for Sigstore.
+      - name: Sigstore Python
+        label: sigstore-python
+        description: The official Python client library for Sigstore.
+      - name: Sigstore Java
+        label: sigstore-java
+        description: The official Java client library for Sigstore.
+
+integrations:
+  - name: GitHub Actions
+    description: Native OIDC-based keyless signing in GitHub Actions workflows.
+  - name: GitLab CI
+    description: Keyless signing support for GitLab CI/CD pipelines.
+  - name: Kubernetes
+    description: Policy Controller enforces Sigstore signature verification at pod admission.
+  - name: Tekton
+    description: Tekton Chains integration for automatic artifact signing in pipelines.
+  - name: npm
+    description: Provenance attestations for npm packages using Sigstore.
+  - name: PyPI
+    description: Package provenance attestations for PyPI using Sigstore.

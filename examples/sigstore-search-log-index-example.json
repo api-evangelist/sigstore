@@ -1,0 +1,21 @@
+{
+  "example": "Search the Rekor transparency log by artifact hash",
+  "request": {
+    "method": "POST",
+    "path": "/api/v1/index/retrieve",
+    "url": "https://rekor.sigstore.dev/api/v1/index/retrieve",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "hash": "sha256:a7f3b2e1c4d5f6a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2"
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": [
+      "24296fb24b8ad77a0d78fb9b5ee5a5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5",
+      "24296fb24b8ad77b1a2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4"
+    ]
+  }
+}

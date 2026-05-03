@@ -1,0 +1,18 @@
+{
+  "name": "Sigstore Rekor Log Entry",
+  "description": "Structure of a transparency log entry in the Sigstore Rekor log.",
+  "fields": [
+    { "name": "uuid", "type": "string", "description": "Log entry UUID" },
+    { "name": "body", "type": "string", "description": "Base64-encoded entry content" },
+    { "name": "integratedTime", "type": "integer", "description": "Unix timestamp of log integration", "required": true },
+    { "name": "logID", "type": "string", "description": "Log identity (SHA256 of log public key)", "required": true },
+    { "name": "logIndex", "type": "integer", "description": "Position in the transparency log", "required": true },
+    { "name": "verification", "type": "object", "description": "Inclusion proof and signed entry timestamp" },
+    { "name": "verification.inclusionProof", "type": "object", "description": "Merkle tree inclusion proof" },
+    { "name": "verification.inclusionProof.checkpoint", "type": "string", "description": "Signed tree head at inclusion time" },
+    { "name": "verification.inclusionProof.hashes", "type": "array", "description": "Merkle proof hash path" },
+    { "name": "verification.inclusionProof.rootHash", "type": "string", "description": "Merkle root hash" },
+    { "name": "verification.inclusionProof.treeSize", "type": "integer", "description": "Tree size at inclusion" },
+    { "name": "verification.signedEntryTimestamp", "type": "string", "description": "Log's signature over entry and timestamp" }
+  ]
+}

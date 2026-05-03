@@ -1,0 +1,62 @@
+extends: "spectral:oas"
+rules:
+  sigstore-operation-summary-title-case:
+    description: Operation summaries must use Title Case.
+    message: "Summary '{{value}}' must be in Title Case."
+    severity: warn
+    given: "$.paths[*][*].summary"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^[A-Z][a-zA-Z0-9]*([ ][A-Z][a-zA-Z0-9]*)*$"
+
+  sigstore-api-versioned-paths:
+    description: All API paths must include a version prefix.
+    message: "Path '{{property}}' should include a version segment (e.g., /api/v1/ or /api/v2/)."
+    severity: warn
+    given: "$.paths[*]~"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^/api/v[0-9]+"
+
+  sigstore-tags-defined:
+    description: Operations must include at least one tag.
+    message: "Operation is missing tags."
+    severity: warn
+    given: "$.paths[*][*]"
+    then:
+      field: tags
+      function: truthy
+
+  sigstore-operationid-required:
+    description: Every operation must have an operationId.
+    message: "Operation is missing an operationId."
+    severity: error
+    given: "$.paths[*][*]"
+    then:
+      field: operationId
+      function: truthy
+
+  sigstore-error-response:
+    description: API operations should document error responses.
+    message: "Operation should document at least one error response (4xx/5xx)."
+    severity: warn
+    given: "$.paths[*][*].responses"
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+          minProperties: 2
+
+  sigstore-description-required:
+    description: API info and operations must have descriptions.
+    message: "{{property}} is missing a description."
+    severity: warn
+    given:
+      - "$.info"
+      - "$.paths[*][*]"
+    then:
+      field: description
+      function: truthy

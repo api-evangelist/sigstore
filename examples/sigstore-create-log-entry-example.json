@@ -1,0 +1,44 @@
+{
+  "example": "Create a new transparency log entry in Rekor",
+  "request": {
+    "method": "POST",
+    "path": "/api/v1/log/entries",
+    "url": "https://rekor.sigstore.dev/api/v1/log/entries",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "apiVersion": "0.0.1",
+      "kind": "hashedrekord",
+      "spec": {
+        "signature": {
+          "format": "x509",
+          "content": "MEYCIQDSyRb...<base64-encoded-signature>",
+          "publicKey": {
+            "content": "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0t...<base64-encoded-cert>"
+          }
+        },
+        "data": {
+          "hash": {
+            "algorithm": "sha256",
+            "value": "a7f3b2e1c4d5f6a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2"
+          }
+        }
+      }
+    }
+  },
+  "response": {
+    "status": 201,
+    "body": {
+      "24296fb24b8ad77a0d78fb9b5ee5a5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5": {
+        "body": "eyJhcGlWZXJzaW9uIjoiMC4wLjEiLCJraW5kIjoiaGFzaGVkcmVrb3JkIiwic3BlYyI6ey4uLn19",
+        "integratedTime": 1746172800,
+        "logID": "c0d23d6ad406973f9559f3ba2d1ca01f84147d8ffc5b8445c224f98b9591801d",
+        "logIndex": 123456789,
+        "verification": {
+          "signedEntryTimestamp": "MEUCIQDc...<base64-encoded-SET>"
+        }
+      }
+    }
+  }
+}

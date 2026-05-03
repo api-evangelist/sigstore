@@ -1,0 +1,69 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/sigstore/refs/heads/main/json-schema/sigstore-log-entry-schema.json",
+  "title": "Sigstore Rekor Log Entry",
+  "description": "Schema representing an entry in the Sigstore Rekor transparency log.",
+  "type": "object",
+  "properties": {
+    "uuid": {
+      "type": "string",
+      "description": "The UUID of the log entry."
+    },
+    "body": {
+      "type": "string",
+      "description": "Base64-encoded entry content containing the signed artifact metadata."
+    },
+    "integratedTime": {
+      "type": "integer",
+      "description": "Unix timestamp (seconds) when the entry was integrated into the log."
+    },
+    "logID": {
+      "type": "string",
+      "description": "SHA256 hash of the log's public key, identifying which log holds this entry."
+    },
+    "logIndex": {
+      "type": "integer",
+      "description": "The index of this entry in the transparency log."
+    },
+    "verification": {
+      "type": "object",
+      "description": "Proof of inclusion data for this log entry.",
+      "properties": {
+        "inclusionProof": {
+          "type": "object",
+          "description": "Merkle tree inclusion proof for verifying this entry is in the log.",
+          "properties": {
+            "checkpoint": {
+              "type": "string",
+              "description": "Signed tree head (checkpoint) at the time of inclusion."
+            },
+            "hashes": {
+              "type": "array",
+              "description": "List of SHA256 hashes forming the inclusion proof path.",
+              "items": {
+                "type": "string"
+              }
+            },
+            "logIndex": {
+              "type": "integer",
+              "description": "The log index of this entry."
+            },
+            "rootHash": {
+              "type": "string",
+              "description": "The Merkle tree root hash at time of inclusion."
+            },
+            "treeSize": {
+              "type": "integer",
+              "description": "The tree size at time of inclusion."
+            }
+          }
+        },
+        "signedEntryTimestamp": {
+          "type": "string",
+          "description": "Signed Entry Timestamp (SET) — the log's signature over the entry and timestamp."
+        }
+      }
+    }
+  },
+  "required": ["body", "integratedTime", "logID", "logIndex"]
+}
