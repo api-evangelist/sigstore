@@ -4,100 +4,37 @@ schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main
 provider: Sigstore
 providerId: sigstore
 created: '2026-05-04'
-modified: '2026-05-04'
+modified: '2026-05-05'
+reconciled: false
 tags:
-  - Certificate Authority
   - Code Signing
-  - Containers
-  - Cryptography
-  - Open Source
   - PKI
   - Security
-  - Software Supply Chain
-  - Transparency Log
+  - Open Source
   - Rate Limiting
-  - Quotas
-  - Throttling
-description: Machine-readable rate limit definitions for the Sigstore API surface. Captures per-tier quotas,
-  burst behavior, response signaling, and recovery semantics. Defaults are scaffold values to be replaced
-  with published provider limits.
-headers:
-  limit: X-RateLimit-Limit
-  remaining: X-RateLimit-Remaining
-  reset: X-RateLimit-Reset
-  retryAfter: Retry-After
-  policy: RateLimit-Policy
-responseCodes:
-  throttled: 429
-  quotaExceeded: 429
-  serviceUnavailable: 503
+description: Sigstore's public-good Fulcio and Rekor instances do not publish formal per-client rate
+  limits in the documentation overview; the project notes the service is operated as a public good and
+  asks heavy consumers to self-host or run a private instance to protect shared capacity. Specific
+  thresholds are not published as a developer-facing SLA.
+sources:
+  - https://docs.sigstore.dev/
+notes: No formal rate-limit specification published. Heavy consumers are encouraged to self-host
+  rather than rely on a published per-client rate ceiling.
 limits:
-  - tier: free
-    name: Free Tier Default
-    scope: api-key
-    metric: requests_per_minute
-    limit: 10
-    burst: 20
-    timeFrame: minute
-    applies:
-      - Rekor Transparency Log API
-      - Fulcio Certificate Authority API
-      - Cosign
-  - tier: free
-    name: Free Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 1000
-    timeFrame: month
-    applies:
-      - Rekor Transparency Log API
-      - Fulcio Certificate Authority API
-      - Cosign
-  - tier: professional
-    name: Professional Tier Default
-    scope: api-key
-    metric: requests_per_minute
-    limit: 100
-    burst: 200
-    timeFrame: minute
-    applies:
-      - Rekor Transparency Log API
-      - Fulcio Certificate Authority API
-      - Cosign
-  - tier: professional
-    name: Professional Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 100000
-    timeFrame: month
-    applies:
-      - Rekor Transparency Log API
-      - Fulcio Certificate Authority API
-      - Cosign
-  - tier: enterprise
-    name: Enterprise Negotiated Limit
-    scope: contract
-    metric: requests_per_minute
-    limit: 1000
-    burst: 5000
-    timeFrame: minute
-    applies:
-      - Rekor Transparency Log API
-      - Fulcio Certificate Authority API
-      - Cosign
+  - name: Public-good fair use
+    scope: client
+    metric: varies
+    limit: not publicly documented
+    notes: Public Fulcio and Rekor instances are operated as a public good; heavy users are encouraged
+      to self-host rather than rely on a published throttle.
 policies:
-  - name: Backoff Strategy
-    description: Clients should implement exponential backoff with jitter, honoring the Retry-After header
-      when present.
-  - name: Burst Handling
-    description: Short bursts above the steady-state limit are tolerated up to the documented burst ceiling
-      before throttling engages.
-  - name: Quota Reset
-    description: Monthly quotas reset at the start of each calendar month in UTC. Per-minute and per-second
-      windows reset on a sliding-window basis.
-  - name: Fair Use
-    description: Even on uncapped enterprise tiers, sustained usage that materially impacts shared infrastructure
-      may be subject to fair-use throttling.
+  - name: Public-Good Fair Use
+    description: Treat the public Sigstore instances as a shared public good. For high-volume signing
+      or verification, self-host Fulcio/Rekor (or use a vendor-operated dedicated instance) rather
+      than relying on the public service.
+  - name: Self-Hosting for Scale
+    description: Sigstore is open source; production-critical workloads should run their own Fulcio
+      and Rekor to control availability and avoid dependence on shared infrastructure.
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
