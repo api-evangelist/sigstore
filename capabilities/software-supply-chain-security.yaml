@@ -1,221 +1,344 @@
-naftiko: "1.0.0-alpha1"
-
+naftiko: 1.0.0-alpha2
 info:
-  label: "Sigstore Software Supply Chain Security"
-  description: >-
-    Unified software supply chain security workflow combining Sigstore's Rekor
-    transparency log and Fulcio certificate authority. Enables artifact signing,
-    verification, certificate issuance, and transparency log auditing for DevOps
-    engineers, security teams, and platform administrators building secure software
-    delivery pipelines.
+  label: Sigstore Software Supply Chain Security
+  description: Unified software supply chain security workflow combining Sigstore's Rekor transparency log and Fulcio certificate
+    authority. Enables artifact signing, verification, certificate issuance, and transparency log auditing for DevOps engineers,
+    security teams, and platform administrators building secure software delivery pipelines.
   tags:
-    - Certificate Authority
-    - Code Signing
-    - Cryptography
-    - DevSecOps
-    - Open Source
-    - PKI
-    - Security
-    - Software Supply Chain
-    - Transparency Log
-  created: "2026-05-02"
-  modified: "2026-05-02"
-
+  - Certificate Authority
+  - Code Signing
+  - Cryptography
+  - DevSecOps
+  - Open Source
+  - PKI
+  - Security
+  - Software Supply Chain
+  - Transparency Log
+  created: '2026-05-02'
+  modified: '2026-05-06'
 binds:
-  - namespace: env
-    keys:
-      REKOR_BASE_URL: REKOR_BASE_URL
-      FULCIO_BASE_URL: FULCIO_BASE_URL
-
+- namespace: env
+  keys:
+    REKOR_BASE_URL: REKOR_BASE_URL
+    FULCIO_BASE_URL: FULCIO_BASE_URL
 capability:
   consumes:
-    - import: rekor
-      location: ./shared/rekor.yaml
-    - import: fulcio
-      location: ./shared/fulcio.yaml
-
+  - type: http
+    namespace: rekor
+    baseUri: '{{env.REKOR_BASE_URL}}'
+    description: Rekor transparency log REST API
+    resources:
+    - name: log-entries
+      path: /api/v1/log/entries
+      description: Transparency log entries
+      operations:
+      - name: create-log-entry
+        method: POST
+        description: Create a new entry in the transparency log
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        body:
+          type: json
+          data:
+            apiVersion: '{{tools.apiVersion}}'
+            kind: '{{tools.kind}}'
+            spec: '{{tools.spec}}'
+      - name: get-log-entry
+        method: GET
+        description: Get a specific log entry by UUID
+        inputParameters:
+        - name: entryUUID
+          in: path
+          type: string
+          required: true
+          description: The UUID of the log entry
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: search-log-entries
+        method: POST
+        description: Search for log entries by entry UUID, hash, or public key
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        body:
+          type: json
+          data:
+            entryUUIDs: '{{tools.entryUUIDs}}'
+            logIndexes: '{{tools.logIndexes}}'
+    - name: log-index
+      path: /api/v1/index/retrieve
+      description: Search the log index
+      operations:
+      - name: search-index
+        method: POST
+        description: Search index by entry metadata (hash, email, public key)
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        body:
+          type: json
+          data:
+            hash: '{{tools.hash}}'
+            email: '{{tools.email}}'
+            publicKey: '{{tools.publicKey}}'
+    - name: log-info
+      path: /api/v1/log
+      description: Transparency log information
+      operations:
+      - name: get-log-info
+        method: GET
+        description: Get information about the transparency log including tree size
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: log-proof
+      path: /api/v1/log/proof
+      description: Log consistency proofs
+      operations:
+      - name: get-log-proof
+        method: GET
+        description: Get consistency proof for the log between two tree sizes
+        inputParameters:
+        - name: firstSize
+          in: query
+          type: integer
+          required: true
+          description: The first tree size
+        - name: lastSize
+          in: query
+          type: integer
+          required: false
+          description: The last tree size
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+  - type: http
+    namespace: fulcio
+    baseUri: '{{env.FULCIO_BASE_URL}}'
+    description: Fulcio certificate authority REST API
+    resources:
+    - name: signing-cert
+      path: /api/v2/signingCert
+      description: Request short-lived signing certificates
+      operations:
+      - name: create-signing-cert
+        method: POST
+        description: Request a signing certificate using OIDC identity token and public key
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        body:
+          type: json
+          data:
+            credentials: '{{tools.credentials}}'
+            publicKeyRequest: '{{tools.publicKeyRequest}}'
+    - name: trust-bundle
+      path: /api/v2/trustBundle
+      description: CA trust bundle
+      operations:
+      - name: get-trust-bundle
+        method: GET
+        description: Get the Fulcio CA trust bundle (root certificates)
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: configuration
+      path: /api/v2/configuration
+      description: CA configuration including supported OIDC issuers
+      operations:
+      - name: get-configuration
+        method: GET
+        description: Get the Fulcio CA configuration including supported OIDC issuers
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
   exposes:
-    - type: rest
-      port: 8080
-      namespace: sigstore-supply-chain-api
-      description: "Unified REST API for Sigstore software supply chain security workflows."
-      resources:
-        - path: /v1/log-entries
-          name: log-entries
-          description: Transparency log entries for signed artifacts
-          operations:
-            - method: POST
-              name: create-log-entry
-              description: Add a signed artifact to the Rekor transparency log
-              call: "rekor.create-log-entry"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-
-            - method: POST
-              name: search-log-entries
-              description: Search transparency log entries by UUID or log index
-              call: "rekor.search-log-entries"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-
-        - path: /v1/log-entries/{entryUUID}
-          name: log-entry
-          description: Individual transparency log entry
-          operations:
-            - method: GET
-              name: get-log-entry
-              description: Retrieve a specific log entry including inclusion proof
-              call: "rekor.get-log-entry"
-              with:
-                entryUUID: "rest.entryUUID"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-
-        - path: /v1/index
-          name: artifact-index
-          description: Search transparency log by artifact metadata
-          operations:
-            - method: POST
-              name: search-artifact
-              description: Find log entries by artifact hash or signer identity
-              call: "rekor.search-index"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-
-        - path: /v1/log
-          name: log-info
-          description: Transparency log status and tree information
-          operations:
-            - method: GET
-              name: get-log-info
-              description: Get current log tree information and size
-              call: "rekor.get-log-info"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-
-        - path: /v1/signing-certificates
-          name: signing-certificates
-          description: Short-lived signing certificate issuance
-          operations:
-            - method: POST
-              name: create-signing-certificate
-              description: Issue a short-lived X.509 signing certificate via Fulcio
-              call: "fulcio.create-signing-cert"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-
-        - path: /v1/trust-bundle
-          name: trust-bundle
-          description: CA trust bundle for certificate verification
-          operations:
-            - method: GET
-              name: get-trust-bundle
-              description: Retrieve the Fulcio CA trust bundle
-              call: "fulcio.get-trust-bundle"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-
-        - path: /v1/configuration
-          name: ca-configuration
-          description: Fulcio CA OIDC issuer configuration
-          operations:
-            - method: GET
-              name: get-ca-configuration
-              description: Get the supported OIDC identity providers for keyless signing
-              call: "fulcio.get-configuration"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-
-    - type: mcp
-      port: 9090
-      namespace: sigstore-supply-chain-mcp
-      transport: http
-      description: "MCP server for AI-assisted software supply chain security, artifact signing, and transparency log auditing."
-      tools:
-        - name: rekor-create-log-entry
-          description: Submit a signed artifact to the Rekor transparency log to create an immutable audit record
-          hints:
-            readOnly: false
-            idempotent: false
-          call: "rekor.create-log-entry"
-          outputParameters:
-            - type: object
-              mapping: "$."
-
-        - name: rekor-get-log-entry
-          description: Retrieve a specific Rekor transparency log entry by UUID, including the inclusion proof
-          hints:
-            readOnly: true
-            idempotent: true
-          call: "rekor.get-log-entry"
-          outputParameters:
-            - type: object
-              mapping: "$."
-
-        - name: rekor-search-artifact
-          description: Search the Rekor index to find log entries for a specific artifact hash or signer email
-          hints:
-            readOnly: true
-            idempotent: true
-          call: "rekor.search-index"
-          outputParameters:
-            - type: object
-              mapping: "$."
-
-        - name: rekor-search-entries
-          description: Retrieve multiple Rekor log entries by UUIDs or log indexes
-          hints:
-            readOnly: true
-            idempotent: true
-          call: "rekor.search-log-entries"
-          outputParameters:
-            - type: object
-              mapping: "$."
-
-        - name: rekor-get-log-info
-          description: Get current Rekor transparency log tree size and signed tree head information
-          hints:
-            readOnly: true
-            idempotent: true
-          call: "rekor.get-log-info"
-          outputParameters:
-            - type: object
-              mapping: "$."
-
-        - name: fulcio-create-signing-certificate
-          description: Request a short-lived X.509 signing certificate from Fulcio using OIDC identity token
-          hints:
-            readOnly: false
-            idempotent: false
-          call: "fulcio.create-signing-cert"
-          outputParameters:
-            - type: object
-              mapping: "$."
-
-        - name: fulcio-get-trust-bundle
-          description: Retrieve the Fulcio CA root and intermediate certificates for offline verification
-          hints:
-            readOnly: true
-            idempotent: true
-          call: "fulcio.get-trust-bundle"
-          outputParameters:
-            - type: object
-              mapping: "$."
-
-        - name: fulcio-get-configuration
-          description: Get the Fulcio CA configuration including all supported OIDC identity providers
-          hints:
-            readOnly: true
-            idempotent: true
-          call: "fulcio.get-configuration"
-          outputParameters:
-            - type: object
-              mapping: "$."
+  - type: rest
+    port: 8080
+    namespace: sigstore-supply-chain-api
+    description: Unified REST API for Sigstore software supply chain security workflows.
+    resources:
+    - path: /v1/log-entries
+      name: log-entries
+      description: Transparency log entries for signed artifacts
+      operations:
+      - method: POST
+        name: create-log-entry
+        description: Add a signed artifact to the Rekor transparency log
+        call: rekor.create-log-entry
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: search-log-entries
+        description: Search transparency log entries by UUID or log index
+        call: rekor.search-log-entries
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/log-entries/{entryUUID}
+      name: log-entry
+      description: Individual transparency log entry
+      operations:
+      - method: GET
+        name: get-log-entry
+        description: Retrieve a specific log entry including inclusion proof
+        call: rekor.get-log-entry
+        with:
+          entryUUID: rest.entryUUID
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/index
+      name: artifact-index
+      description: Search transparency log by artifact metadata
+      operations:
+      - method: POST
+        name: search-artifact
+        description: Find log entries by artifact hash or signer identity
+        call: rekor.search-index
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/log
+      name: log-info
+      description: Transparency log status and tree information
+      operations:
+      - method: GET
+        name: get-log-info
+        description: Get current log tree information and size
+        call: rekor.get-log-info
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/signing-certificates
+      name: signing-certificates
+      description: Short-lived signing certificate issuance
+      operations:
+      - method: POST
+        name: create-signing-certificate
+        description: Issue a short-lived X.509 signing certificate via Fulcio
+        call: fulcio.create-signing-cert
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/trust-bundle
+      name: trust-bundle
+      description: CA trust bundle for certificate verification
+      operations:
+      - method: GET
+        name: get-trust-bundle
+        description: Retrieve the Fulcio CA trust bundle
+        call: fulcio.get-trust-bundle
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/configuration
+      name: ca-configuration
+      description: Fulcio CA OIDC issuer configuration
+      operations:
+      - method: GET
+        name: get-ca-configuration
+        description: Get the supported OIDC identity providers for keyless signing
+        call: fulcio.get-configuration
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    port: 9090
+    namespace: sigstore-supply-chain-mcp
+    transport: http
+    description: MCP server for AI-assisted software supply chain security, artifact signing, and transparency log auditing.
+    tools:
+    - name: rekor-create-log-entry
+      description: Submit a signed artifact to the Rekor transparency log to create an immutable audit record
+      hints:
+        readOnly: false
+        idempotent: false
+      call: rekor.create-log-entry
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rekor-get-log-entry
+      description: Retrieve a specific Rekor transparency log entry by UUID, including the inclusion proof
+      hints:
+        readOnly: true
+        idempotent: true
+      call: rekor.get-log-entry
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rekor-search-artifact
+      description: Search the Rekor index to find log entries for a specific artifact hash or signer email
+      hints:
+        readOnly: true
+        idempotent: true
+      call: rekor.search-index
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rekor-search-entries
+      description: Retrieve multiple Rekor log entries by UUIDs or log indexes
+      hints:
+        readOnly: true
+        idempotent: true
+      call: rekor.search-log-entries
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: rekor-get-log-info
+      description: Get current Rekor transparency log tree size and signed tree head information
+      hints:
+        readOnly: true
+        idempotent: true
+      call: rekor.get-log-info
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: fulcio-create-signing-certificate
+      description: Request a short-lived X.509 signing certificate from Fulcio using OIDC identity token
+      hints:
+        readOnly: false
+        idempotent: false
+      call: fulcio.create-signing-cert
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: fulcio-get-trust-bundle
+      description: Retrieve the Fulcio CA root and intermediate certificates for offline verification
+      hints:
+        readOnly: true
+        idempotent: true
+      call: fulcio.get-trust-bundle
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: fulcio-get-configuration
+      description: Get the Fulcio CA configuration including all supported OIDC identity providers
+      hints:
+        readOnly: true
+        idempotent: true
+      call: fulcio.get-configuration
+      outputParameters:
+      - type: object
+        mapping: $.
