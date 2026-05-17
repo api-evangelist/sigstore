@@ -45,7 +45,7 @@ apis:
         url: https://docs.sigstore.dev/logging/overview/
       - type: OpenAPI
         url: https://raw.githubusercontent.com/api-evangelist/sigstore/refs/heads/main/openapi/rekor-openapi.yaml
-      - type: GitHub Repository
+      - type: GitHubRepository
         url: https://github.com/sigstore/rekor
       - type: Rules
         url: https://raw.githubusercontent.com/api-evangelist/sigstore/refs/heads/main/rules/sigstore-rules.yml
@@ -72,7 +72,7 @@ apis:
         url: https://docs.sigstore.dev/certificate_authority/overview/
       - type: OpenAPI
         url: https://raw.githubusercontent.com/api-evangelist/sigstore/refs/heads/main/openapi/fulcio-openapi.json
-      - type: GitHub Repository
+      - type: GitHubRepository
         url: https://github.com/sigstore/fulcio
 
   - aid: sigstore:cosign
@@ -91,7 +91,7 @@ apis:
     properties:
       - type: Documentation
         url: https://docs.sigstore.dev/cosign/signing/overview/
-      - type: GitHub Repository
+      - type: GitHubRepository
         url: https://github.com/sigstore/cosign
 
 common:
@@ -99,9 +99,9 @@ common:
     url: https://www.sigstore.dev/
   - type: Documentation
     url: https://docs.sigstore.dev/
-  - type: Getting Started
+  - type: GettingStarted
     url: https://docs.sigstore.dev/quickstart/quickstart-cosign/
-  - type: GitHub Organization
+  - type: GitHubOrganization
     url: https://github.com/sigstore
   - type: Blog
     url: https://blog.sigstore.dev/
