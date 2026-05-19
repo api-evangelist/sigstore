@@ -1,0 +1,141 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Fulcio — CA
+  description: 'Fulcio — CA. 3 operations. Lead operation: *
+
+    Returns the configuration of supported OIDC issuers, including the required challenge for each issuer.. Self-contained
+    Naftiko capability covering one Sigstore business surface.'
+  tags:
+  - Sigstore
+  - CA
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    SIGSTORE_API_KEY: SIGSTORE_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: fulcio-ca
+    baseUri: http://fulcio.sigstore.dev
+    description: Fulcio — CA business capability. Self-contained, no shared references.
+    resources:
+    - name: api-v2-configuration
+      path: /api/v2/configuration
+      operations:
+      - name: cagetconfiguration
+        method: GET
+        description: '*'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: api-v2-signingCert
+      path: /api/v2/signingCert
+      operations:
+      - name: cacreatesigningcertificate
+        method: POST
+        description: '*'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: string
+          required: true
+    - name: api-v2-trustBundle
+      path: /api/v2/trustBundle
+      operations:
+      - name: cagettrustbundle
+        method: GET
+        description: '*'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+  exposes:
+  - type: rest
+    namespace: fulcio-ca-rest
+    port: 8080
+    description: REST adapter for Fulcio — CA. One Spectral-compliant resource per consumed operation, prefixed with /v1.
+    resources:
+    - path: /v1/api/v2/configuration
+      name: api-v2-configuration
+      description: REST surface for api-v2-configuration.
+      operations:
+      - method: GET
+        name: cagetconfiguration
+        description: '*'
+        call: fulcio-ca.cagetconfiguration
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/v2/signingcert
+      name: api-v2-signingcert
+      description: REST surface for api-v2-signingCert.
+      operations:
+      - method: POST
+        name: cacreatesigningcertificate
+        description: '*'
+        call: fulcio-ca.cacreatesigningcertificate
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/v2/trustbundle
+      name: api-v2-trustbundle
+      description: REST surface for api-v2-trustBundle.
+      operations:
+      - method: GET
+        name: cagettrustbundle
+        description: '*'
+        call: fulcio-ca.cagettrustbundle
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: fulcio-ca-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Fulcio — CA. One tool per consumed operation, routed inline through this capability's consumes
+      block.
+    tools:
+    - name: get-ca
+      description: '*'
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: fulcio-ca.cagetconfiguration
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: post-ca
+      description: '*'
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: fulcio-ca.cacreatesigningcertificate
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-ca-2
+      description: '*'
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: fulcio-ca.cagettrustbundle
+      outputParameters:
+      - type: object
+        mapping: $.

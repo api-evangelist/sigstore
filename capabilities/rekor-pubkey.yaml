@@ -1,0 +1,75 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Rekor — pubkey
+  description: 'Rekor — pubkey. 1 operations. Lead operation: Retrieve the public key that can be used to validate the signed
+    tree head. Self-contained Naftiko capability covering one Sigstore business surface.'
+  tags:
+  - Sigstore
+  - pubkey
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    SIGSTORE_API_KEY: SIGSTORE_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: rekor-pubkey
+    baseUri: http://rekor.sigstore.dev
+    description: Rekor — pubkey business capability. Self-contained, no shared references.
+    resources:
+    - name: api-v1-log-publicKey
+      path: /api/v1/log/publicKey
+      operations:
+      - name: getpublickey
+        method: GET
+        description: Retrieve the public key that can be used to validate the signed tree head
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: treeID
+          in: query
+          type: string
+          description: The tree ID of the tree you wish to get a public key for
+  exposes:
+  - type: rest
+    namespace: rekor-pubkey-rest
+    port: 8080
+    description: REST adapter for Rekor — pubkey. One Spectral-compliant resource per consumed operation, prefixed with /v1.
+    resources:
+    - path: /v1/api/v1/log/publickey
+      name: api-v1-log-publickey
+      description: REST surface for api-v1-log-publicKey.
+      operations:
+      - method: GET
+        name: getpublickey
+        description: Retrieve the public key that can be used to validate the signed tree head
+        call: rekor-pubkey.getpublickey
+        with:
+          treeID: rest.treeID
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: rekor-pubkey-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Rekor — pubkey. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: retrieve-public-key-that-can
+      description: Retrieve the public key that can be used to validate the signed tree head
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: rekor-pubkey.getpublickey
+      with:
+        treeID: tools.treeID
+      outputParameters:
+      - type: object
+        mapping: $.

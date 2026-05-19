@@ -1,0 +1,196 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Rekor — entries
+  description: 'Rekor — entries. 4 operations. Lead operation: Creates an entry in the transparency log. Self-contained Naftiko
+    capability covering one Sigstore business surface.'
+  tags:
+  - Sigstore
+  - entries
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    SIGSTORE_API_KEY: SIGSTORE_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: rekor-entries
+    baseUri: http://rekor.sigstore.dev
+    description: Rekor — entries business capability. Self-contained, no shared references.
+    resources:
+    - name: api-v1-log-entries
+      path: /api/v1/log/entries
+      operations:
+      - name: createlogentry
+        method: POST
+        description: Creates an entry in the transparency log
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: proposedEntry
+          in: body
+          type: string
+          required: true
+      - name: getlogentrybyindex
+        method: GET
+        description: Retrieves an entry and inclusion proof from the transparency log (if it exists) by index
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: logIndex
+          in: query
+          type: integer
+          description: specifies the index of the entry in the transparency log to be retrieved
+          required: true
+    - name: api-v1-log-entries-retrieve
+      path: /api/v1/log/entries/retrieve
+      operations:
+      - name: searchlogquery
+        method: POST
+        description: Searches transparency log for one or more log entries
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: entry
+          in: body
+          type: string
+          required: true
+    - name: api-v1-log-entries-entryUUID
+      path: /api/v1/log/entries/{entryUUID}
+      operations:
+      - name: getlogentrybyuuid
+        method: GET
+        description: Get log entry and information required to generate an inclusion proof for the entry in the transparency
+          log
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: entryUUID
+          in: path
+          type: string
+          description: the UUID of the entry for which the inclusion proof information should be returned
+          required: true
+  exposes:
+  - type: rest
+    namespace: rekor-entries-rest
+    port: 8080
+    description: REST adapter for Rekor — entries. One Spectral-compliant resource per consumed operation, prefixed with /v1.
+    resources:
+    - path: /v1/api/v1/log/entries
+      name: api-v1-log-entries
+      description: REST surface for api-v1-log-entries.
+      operations:
+      - method: POST
+        name: createlogentry
+        description: Creates an entry in the transparency log
+        call: rekor-entries.createlogentry
+        with:
+          proposedEntry: rest.proposedEntry
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: GET
+        name: getlogentrybyindex
+        description: Retrieves an entry and inclusion proof from the transparency log (if it exists) by index
+        call: rekor-entries.getlogentrybyindex
+        with:
+          logIndex: rest.logIndex
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/v1/log/entries/retrieve
+      name: api-v1-log-entries-retrieve
+      description: REST surface for api-v1-log-entries-retrieve.
+      operations:
+      - method: POST
+        name: searchlogquery
+        description: Searches transparency log for one or more log entries
+        call: rekor-entries.searchlogquery
+        with:
+          entry: rest.entry
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/v1/log/entries/{entryuuid}
+      name: api-v1-log-entries-entryuuid
+      description: REST surface for api-v1-log-entries-entryUUID.
+      operations:
+      - method: GET
+        name: getlogentrybyuuid
+        description: Get log entry and information required to generate an inclusion proof for the entry in the transparency
+          log
+        call: rekor-entries.getlogentrybyuuid
+        with:
+          entryUUID: rest.entryUUID
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: rekor-entries-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Rekor — entries. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: creates-entry-transparency-log
+      description: Creates an entry in the transparency log
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: rekor-entries.createlogentry
+      with:
+        proposedEntry: tools.proposedEntry
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: retrieves-entry-and-inclusion-proof
+      description: Retrieves an entry and inclusion proof from the transparency log (if it exists) by index
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: rekor-entries.getlogentrybyindex
+      with:
+        logIndex: tools.logIndex
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: searches-transparency-log-one-more
+      description: Searches transparency log for one or more log entries
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: false
+      call: rekor-entries.searchlogquery
+      with:
+        entry: tools.entry
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-log-entry-and-information
+      description: Get log entry and information required to generate an inclusion proof for the entry in the transparency
+        log
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: rekor-entries.getlogentrybyuuid
+      with:
+        entryUUID: tools.entryUUID
+      outputParameters:
+      - type: object
+        mapping: $.
