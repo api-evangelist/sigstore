@@ -1,0 +1,51 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Fulcio",
+    "version": "2.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "CA",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "*\nReturns the configuration of supported OIDC issuers, including the required challenge for each issuer.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v2/configuration"
+          },
+          "docs": "*\nReturns the configuration of supported OIDC issuers, including the required challenge for each issuer."
+        },
+        {
+          "info": {
+            "name": "*\nReturns an X.509 certificate created by the Fulcio certificate authority for the given request parameters",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v2/signingCert"
+          },
+          "docs": "*\nReturns an X.509 certificate created by the Fulcio certificate authority for the given request parameters"
+        },
+        {
+          "info": {
+            "name": "*\nReturns the bundle of certificates that can be used to validate code signing certificates issued by this Fulcio instance",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v2/trustBundle"
+          },
+          "docs": "*\nReturns the bundle of certificates that can be used to validate code signing certificates issued by this Fulcio instance"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

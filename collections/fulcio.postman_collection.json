@@ -1,0 +1,385 @@
+{
+  "item": [
+    {
+      "id": "54c37c31-5126-4b03-b929-f9ff4e1030e8",
+      "name": "CA",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "0e3fc112-35ae-48b3-b7fc-282aa4160096",
+          "name": "*\nReturns the configuration of supported OIDC issuers, including the required challenge for each issuer.",
+          "request": {
+            "name": "*\nReturns the configuration of supported OIDC issuers, including the required challenge for each issuer.",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "configuration"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "1c656c8e-205c-4f9e-a045-bdcda01b750b",
+              "name": "A successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "configuration"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"issuers\": [\n    {\n      \"issuerUrl\": \"string\",\n      \"wildcardIssuerUrl\": \"string\",\n      \"audience\": \"string\",\n      \"challengeClaim\": \"string\",\n      \"spiffeTrustDomain\": \"string\",\n      \"issuerType\": \"string\",\n      \"subjectDomain\": \"string\",\n      \"skipEmailVerification\": true\n    },\n    {\n      \"issuerUrl\": \"string\",\n      \"wildcardIssuerUrl\": \"string\",\n      \"audience\": \"string\",\n      \"challengeClaim\": \"string\",\n      \"spiffeTrustDomain\": \"string\",\n      \"issuerType\": \"string\",\n      \"subjectDomain\": \"string\",\n      \"skipEmailVerification\": true\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b826faf7-93dd-45c2-a824-4668d1a64fc4",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "configuration"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 346,\n  \"message\": \"string\",\n  \"details\": [\n    {\n      \"@type\": \"string\",\n      \"key_0\": {},\n      \"key_1\": {}\n    },\n    {\n      \"@type\": \"string\",\n      \"key_0\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "91f358a4-31ee-46aa-bdc9-d7a138b1d6dd",
+          "name": "*\nReturns an X.509 certificate created by the Fulcio certificate authority for the given request parameters",
+          "request": {
+            "name": "*\nReturns an X.509 certificate created by the Fulcio certificate authority for the given request parameters",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "signingCert"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"credentials\": {\n    \"oidcIdentityToken\": \"<string>\"\n  },\n  \"publicKeyRequest\": {\n    \"publicKey\": {\n      \"content\": \"<string>\",\n      \"algorithm\": \"PUBLIC_KEY_ALGORITHM_UNSPECIFIED\"\n    },\n    \"proofOfPossession\": \"<byte>\"\n  },\n  \"certificateSigningRequest\": \"<byte>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e1347137-b8b8-4814-a53a-02f28b93976e",
+              "name": "A successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "signingCert"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"credentials\": {\n    \"oidcIdentityToken\": \"<string>\"\n  },\n  \"publicKeyRequest\": {\n    \"publicKey\": {\n      \"content\": \"<string>\",\n      \"algorithm\": \"PUBLIC_KEY_ALGORITHM_UNSPECIFIED\"\n    },\n    \"proofOfPossession\": \"<byte>\"\n  },\n  \"certificateSigningRequest\": \"<byte>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"signedCertificateDetachedSct\": {\n    \"chain\": {\n      \"certificates\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    \"signedCertificateTimestamp\": \"string\"\n  },\n  \"signedCertificateEmbeddedSct\": {\n    \"chain\": {\n      \"certificates\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b04ea8f6-8ab1-4486-a031-b2decd09e894",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "signingCert"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"credentials\": {\n    \"oidcIdentityToken\": \"<string>\"\n  },\n  \"publicKeyRequest\": {\n    \"publicKey\": {\n      \"content\": \"<string>\",\n      \"algorithm\": \"PUBLIC_KEY_ALGORITHM_UNSPECIFIED\"\n    },\n    \"proofOfPossession\": \"<byte>\"\n  },\n  \"certificateSigningRequest\": \"<byte>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 1266,\n  \"message\": \"string\",\n  \"details\": [\n    {\n      \"@type\": \"string\",\n      \"key_0\": {}\n    },\n    {\n      \"@type\": \"string\",\n      \"key_0\": {},\n      \"key_1\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e516c426-d438-42b7-b034-85e1c6dbe0fd",
+          "name": "*\nReturns the bundle of certificates that can be used to validate code signing certificates issued by this Fulcio instance",
+          "request": {
+            "name": "*\nReturns the bundle of certificates that can be used to validate code signing certificates issued by this Fulcio instance",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "trustBundle"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0ce01ecf-1be8-4664-a4fc-f8aaa2ab7f7a",
+              "name": "A successful response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "trustBundle"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"chains\": [\n    {\n      \"certificates\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"certificates\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "51871530-fceb-417f-9fe9-693b0fca345f",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "trustBundle"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 1266,\n  \"message\": \"string\",\n  \"details\": [\n    {\n      \"@type\": \"string\",\n      \"key_0\": {}\n    },\n    {\n      \"@type\": \"string\",\n      \"key_0\": {},\n      \"key_1\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://fulcio.sigstore.dev",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "47fcbbfa-492f-4919-8782-acd30a1718ba",
+    "name": "Fulcio",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Contact Support:\n Name: sigstore Fulcio project\n Email: sigstore-dev@googlegroups.com",
+      "type": "text/plain"
+    }
+  }
+}
