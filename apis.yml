@@ -6,7 +6,7 @@ description: >-
   signing keys, making software supply chain security more accessible. The Sigstore ecosystem includes Cosign for
   artifact signing, Fulcio as the certificate authority, and Rekor as the cryptographically secure transparency log.
 type: Index
-image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 tags:
   - Certificate Authority
   - Code Signing
