@@ -85,6 +85,8 @@ apis:
       - type: GitHubRepository
         url: https://github.com/sigstore/cosign
 common:
+  - type: DomainSecurity
+    url: security/sigstore-domain-security.yml
   - type: LinkedIn
     url: https://www.linkedin.com/company/sigstore
   - type: Website
