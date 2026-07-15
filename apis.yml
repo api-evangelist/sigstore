@@ -85,6 +85,8 @@ apis:
       - type: GitHubRepository
         url: https://github.com/sigstore/cosign
 common:
+  - type: AgenticAccess
+    url: agentic-access/sigstore-agentic-access.yml
   - type: DomainSecurity
     url: security/sigstore-domain-security.yml
   - type: LinkedIn
