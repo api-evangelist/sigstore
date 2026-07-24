@@ -1,0 +1,159 @@
+swagger: '2.0'
+info:
+  title: Fulcio CA tlog API
+  version: 2.0.0
+  contact:
+    name: sigstore Fulcio project
+    url: https://github.com/sigstore/fulcio
+    email: sigstore-dev@googlegroups.com
+  license:
+    name: Apache License 2.0
+    url: https://github.com/sigstore/fulcio/blob/main/LICENSE
+host: fulcio.sigstore.dev
+schemes:
+- http
+consumes:
+- application/json
+produces:
+- application/json
+tags:
+- name: tlog
+paths:
+  /api/v1/log:
+    get:
+      summary: Get information about the current state of the transparency log
+      description: Returns the current root hash and size of the merkle tree used to store the log entries.
+      operationId: getLogInfo
+      tags:
+      - tlog
+      responses:
+        200:
+          description: A JSON object with the root hash and tree size as properties
+          schema:
+            $ref: '#/definitions/LogInfo'
+        default:
+          $ref: '#/responses/InternalServerError'
+  /api/v1/log/proof:
+    get:
+      summary: Get information required to generate a consistency proof for the transparency log
+      description: Returns a list of hashes for specified tree sizes that can be used to confirm the consistency of the transparency log
+      operationId: getLogProof
+      tags:
+      - tlog
+      parameters:
+      - in: query
+        name: firstSize
+        type: integer
+        default: 1
+        minimum: 1
+        description: 'The size of the tree that you wish to prove consistency from (1 means the beginning of the log) Defaults to 1 if not specified
+
+          '
+      - in: query
+        name: lastSize
+        type: integer
+        required: true
+        minimum: 1
+        description: The size of the tree that you wish to prove consistency to
+      - in: query
+        name: treeID
+        type: string
+        pattern: ^[0-9]+$
+        description: The tree ID of the tree that you wish to prove consistency for
+      responses:
+        200:
+          description: All hashes required to compute the consistency proof
+          schema:
+            $ref: '#/definitions/ConsistencyProof'
+        400:
+          $ref: '#/responses/BadContent'
+        default:
+          $ref: '#/responses/InternalServerError'
+definitions:
+  InactiveShardLogInfo:
+    type: object
+    properties:
+      rootHash:
+        type: string
+        description: The current hash value stored at the root of the merkle tree
+        pattern: ^[0-9a-fA-F]{64}$
+      treeSize:
+        type: integer
+        description: The current number of nodes in the merkle tree
+        minimum: 1
+      signedTreeHead:
+        type: string
+        format: signedCheckpoint
+        description: The current signed tree head
+      treeID:
+        type: string
+        description: The current treeID
+        pattern: ^[0-9]+$
+    required:
+    - rootHash
+    - treeSize
+    - signedTreeHead
+    - treeID
+  LogInfo:
+    type: object
+    properties:
+      rootHash:
+        type: string
+        description: The current hash value stored at the root of the merkle tree
+        pattern: ^[0-9a-fA-F]{64}$
+      treeSize:
+        type: integer
+        description: The current number of nodes in the merkle tree
+        minimum: 1
+      signedTreeHead:
+        type: string
+        format: signedCheckpoint
+        description: The current signed tree head
+      treeID:
+        type: string
+        description: The current treeID
+        pattern: ^[0-9]+$
+      inactiveShards:
+        type: array
+        items:
+          $ref: '#/definitions/InactiveShardLogInfo'
+    required:
+    - rootHash
+    - treeSize
+    - signedTreeHead
+    - treeID
+  ConsistencyProof:
+    type: object
+    properties:
+      rootHash:
+        type: string
+        description: The hash value stored at the root of the merkle tree at the time the proof was generated
+        pattern: ^[0-9a-fA-F]{64}$
+      hashes:
+        type: array
+        items:
+          type: string
+          description: SHA256 hash value expressed in hexadecimal format
+          pattern: ^[0-9a-fA-F]{64}$
+    required:
+    - rootHash
+    - hashes
+  Error:
+    type: object
+    properties:
+      code:
+        type: integer
+      message:
+        type: string
+responses:
+  InternalServerError:
+    description: There was an internal error in the server while processing the request
+    schema:
+      $ref: '#/definitions/Error'
+  BadContent:
+    description: The content supplied to the server was invalid
+    schema:
+      $ref: '#/definitions/Error'
+externalDocs:
+  description: More about Fulcio
+  url: https://github.com/sigstore/fulcio
