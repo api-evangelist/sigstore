@@ -6,7 +6,19 @@ description: >-
   signing keys, making software supply chain security more accessible. The Sigstore ecosystem includes Cosign for
   artifact signing, Fulcio as the certificate authority, and Rekor as the cryptographically secure transparency log.
 type: Index
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: paid
+  onboarding: unknown
+  trial: false
+  try_now: false
+  public: false
+  label: Paid
+  confidence: medium
+  source:
+  - plans
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/sigstore.png
 tags:
   - Certificate Authority
   - Code Signing
@@ -22,68 +34,129 @@ created: '2026-03-26'
 modified: '2026-05-19'
 specificationVersion: '0.19'
 apis:
-  - aid: sigstore:rekor
-    name: Rekor Transparency Log API
-    description: >-
-      Rekor is a cryptographically secure, immutable transparency log for signed software releases. The Rekor API
-      enables searching the transparency log, retrieving log entries, checking proofs, and querying the log's public
-      key. The public-good instance runs at rekor.sigstore.dev.
-    humanURL: https://docs.sigstore.dev/logging/overview/
-    baseURL: https://rekor.sigstore.dev
-    tags:
-      - Cryptography
-      - Security
-      - Software Supply Chain
-      - Transparency Log
-    properties:
-      - type: Documentation
-        url: https://docs.sigstore.dev/logging/overview/
-      - type: OpenAPI
-        url: https://raw.githubusercontent.com/api-evangelist/sigstore/refs/heads/main/openapi/rekor-openapi.yaml
-      - type: GitHubRepository
-        url: https://github.com/sigstore/rekor
-      - type: Rules
-        url: https://raw.githubusercontent.com/api-evangelist/sigstore/refs/heads/main/rules/sigstore-rules.yml
-  - aid: sigstore:fulcio
-    name: Fulcio Certificate Authority API
-    description: >-
-      Fulcio is Sigstore's free Root Certificate Authority for code signing certificates. It issues short-lived signing
-      certificates to software producers based on OIDC authentication. The API provides endpoints for obtaining signing
-      certificates, retrieving trust bundles, and querying CA configuration. The public instance runs at
-      fulcio.sigstore.dev.
-    humanURL: https://docs.sigstore.dev/certificate_authority/overview/
-    baseURL: https://fulcio.sigstore.dev
-    tags:
-      - Certificate Authority
-      - Code Signing
-      - Cryptography
-      - OIDC
-      - PKI
-      - Security
-    properties:
-      - type: Documentation
-        url: https://docs.sigstore.dev/certificate_authority/overview/
-      - type: OpenAPI
-        url: https://raw.githubusercontent.com/api-evangelist/sigstore/refs/heads/main/openapi/fulcio-openapi.json
-      - type: GitHubRepository
-        url: https://github.com/sigstore/fulcio
-  - aid: sigstore:cosign
-    name: Cosign
-    description: >-
-      Cosign is the Sigstore tool for signing and verifying container images and other OCI artifacts. It enables keyless
-      signing using OIDC identity, hardware token signing, and policy enforcement for container supply chain security.
-    humanURL: https://docs.sigstore.dev/cosign/signing/overview/
-    tags:
-      - Code Signing
-      - Containers
-      - OCI
-      - Security
-      - Software Supply Chain
-    properties:
-      - type: Documentation
-        url: https://docs.sigstore.dev/cosign/signing/overview/
-      - type: GitHubRepository
-        url: https://github.com/sigstore/cosign
+- aid: sigstore:cosign
+  name: Cosign
+  description: >-
+    Cosign is the Sigstore tool for signing and verifying container images and other OCI artifacts. It
+    enables keyless signing using OIDC identity, hardware token signing, and policy enforcement for container
+    supply chain security.
+  humanURL: https://docs.sigstore.dev/cosign/signing/overview/
+  tags:
+  - Code Signing
+  - Containers
+  - OCI
+  - Security
+  - Software Supply Chain
+  properties:
+  - type: Documentation
+    url: https://docs.sigstore.dev/cosign/signing/overview/
+  - type: GitHubRepository
+    url: https://github.com/sigstore/cosign
+- aid: sigstore:sigstore-ca-api
+  name: Sigstore CA API
+  description: The CA API from Sigstore — 3 operation(s) for ca.
+  humanURL: https://docs.sigstore.dev/logging/overview/
+  baseURL: https://rekor.sigstore.dev
+  tags:
+  - CA
+  properties:
+  - type: OpenAPI
+    url: openapi/sigstore-ca-api-openapi.yml
+  - type: Documentation
+    url: https://docs.sigstore.dev/logging/overview/
+  - type: GitHubRepository
+    url: https://github.com/sigstore/rekor
+  - type: Rules
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/sigstore/refs/heads/main/rules/sigstore-rules.yml
+  - type: Documentation
+    url: https://docs.sigstore.dev/certificate_authority/overview/
+  - type: GitHubRepository
+    url: https://github.com/sigstore/fulcio
+- aid: sigstore:sigstore-entries-api
+  name: Sigstore entries API
+  description: The entries API from Sigstore — 3 operation(s) for entries.
+  humanURL: https://docs.sigstore.dev/logging/overview/
+  baseURL: https://rekor.sigstore.dev
+  tags:
+  - entries
+  properties:
+  - type: OpenAPI
+    url: openapi/sigstore-entries-api-openapi.yml
+  - type: Documentation
+    url: https://docs.sigstore.dev/logging/overview/
+  - type: GitHubRepository
+    url: https://github.com/sigstore/rekor
+  - type: Rules
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/sigstore/refs/heads/main/rules/sigstore-rules.yml
+  - type: Documentation
+    url: https://docs.sigstore.dev/certificate_authority/overview/
+  - type: GitHubRepository
+    url: https://github.com/sigstore/fulcio
+- aid: sigstore:sigstore-index-api
+  name: Sigstore index API
+  description: The index API from Sigstore — 1 operation(s) for index.
+  humanURL: https://docs.sigstore.dev/logging/overview/
+  baseURL: https://rekor.sigstore.dev
+  tags:
+  - index
+  properties:
+  - type: OpenAPI
+    url: openapi/sigstore-index-api-openapi.yml
+  - type: Documentation
+    url: https://docs.sigstore.dev/logging/overview/
+  - type: GitHubRepository
+    url: https://github.com/sigstore/rekor
+  - type: Rules
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/sigstore/refs/heads/main/rules/sigstore-rules.yml
+  - type: Documentation
+    url: https://docs.sigstore.dev/certificate_authority/overview/
+  - type: GitHubRepository
+    url: https://github.com/sigstore/fulcio
+- aid: sigstore:sigstore-pubkey-api
+  name: Sigstore pubkey API
+  description: The pubkey API from Sigstore — 1 operation(s) for pubkey.
+  humanURL: https://docs.sigstore.dev/logging/overview/
+  baseURL: https://rekor.sigstore.dev
+  tags:
+  - pubkey
+  properties:
+  - type: OpenAPI
+    url: openapi/sigstore-pubkey-api-openapi.yml
+  - type: Documentation
+    url: https://docs.sigstore.dev/logging/overview/
+  - type: GitHubRepository
+    url: https://github.com/sigstore/rekor
+  - type: Rules
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/sigstore/refs/heads/main/rules/sigstore-rules.yml
+  - type: Documentation
+    url: https://docs.sigstore.dev/certificate_authority/overview/
+  - type: GitHubRepository
+    url: https://github.com/sigstore/fulcio
+- aid: sigstore:sigstore-tlog-api
+  name: Sigstore tlog API
+  description: The tlog API from Sigstore — 2 operation(s) for tlog.
+  humanURL: https://docs.sigstore.dev/logging/overview/
+  baseURL: https://rekor.sigstore.dev
+  tags:
+  - tlog
+  properties:
+  - type: OpenAPI
+    url: openapi/sigstore-tlog-api-openapi.yml
+  - type: Documentation
+    url: https://docs.sigstore.dev/logging/overview/
+  - type: GitHubRepository
+    url: https://github.com/sigstore/rekor
+  - type: Rules
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/sigstore/refs/heads/main/rules/sigstore-rules.yml
+  - type: Documentation
+    url: https://docs.sigstore.dev/certificate_authority/overview/
+  - type: GitHubRepository
+    url: https://github.com/sigstore/fulcio
 common:
   - type: AgenticAccess
     url: agentic-access/sigstore-agentic-access.yml
