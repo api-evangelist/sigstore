@@ -1,0 +1,22 @@
+{
+  "provider": "sigstore",
+  "sources": [
+    "sigstore-ca-api-openapi.yml",
+    "sigstore-entries-api-openapi.yml",
+    "sigstore-index-api-openapi.yml",
+    "sigstore-pubkey-api-openapi.yml",
+    "sigstore-tlog-api-openapi.yml"
+  ],
+  "outputs": [
+    "sigstore-ca-api-openapi.yml",
+    "sigstore-entries-api-openapi.yml",
+    "sigstore-index-api-openapi.yml",
+    "sigstore-pubkey-api-openapi.yml",
+    "sigstore-tlog-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
