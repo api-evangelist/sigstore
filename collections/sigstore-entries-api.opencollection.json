@@ -1,0 +1,78 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Fulcio CA entries API",
+    "version": "2.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "entries",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieves an entry and inclusion proof from the transparency log (if it exists) by index",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/log/entries",
+            "params": [
+              {
+                "name": "logIndex",
+                "value": "",
+                "type": "query",
+                "description": "specifies the index of the entry in the transparency log to be retrieved"
+              }
+            ]
+          },
+          "docs": "Retrieves an entry and inclusion proof from the transparency log (if it exists) by index"
+        },
+        {
+          "info": {
+            "name": "Creates an entry in the transparency log",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/log/entries"
+          },
+          "docs": "Creates an entry in the transparency log for a detached signature, public key, and content.\n"
+        },
+        {
+          "info": {
+            "name": "Get log entry and information required to generate an inclusion proof for the entry in the transparency log",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/log/entries/:entryUUID",
+            "params": [
+              {
+                "name": "entryUUID",
+                "value": "",
+                "type": "path",
+                "description": "the UUID of the entry for which the inclusion proof information should be returned"
+              }
+            ]
+          },
+          "docs": "Returns the entry, root hash, tree size, and a list of hashes that can be used to calculate proof of an entry being included in the transparency log"
+        },
+        {
+          "info": {
+            "name": "Searches transparency log for one or more log entries",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/log/entries/retrieve"
+          },
+          "docs": "Searches transparency log for one or more log entries"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

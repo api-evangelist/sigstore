@@ -1,0 +1,29 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Fulcio CA index API",
+    "version": "2.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "index",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Searches index by entry metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/index/retrieve"
+          },
+          "docs": "EXPERIMENTAL - this endpoint is offered as best effort only and may be changed or removed in future releases.\nThe results returned from this endpoint may be incomplete.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

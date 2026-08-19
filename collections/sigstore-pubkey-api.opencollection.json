@@ -1,0 +1,37 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Fulcio CA pubkey API",
+    "version": "2.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "pubkey",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve the public key that can be used to validate the signed tree head",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/log/publicKey",
+            "params": [
+              {
+                "name": "treeID",
+                "value": "",
+                "type": "query",
+                "description": "The tree ID of the tree you wish to get a public key for"
+              }
+            ]
+          },
+          "docs": "Returns the public key that can be used to validate the signed tree head"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

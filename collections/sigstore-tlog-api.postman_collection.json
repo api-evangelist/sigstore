@@ -1,0 +1,353 @@
+{
+  "item": [
+    {
+      "id": "669fa755-5736-4add-910d-55348dbe3b3b",
+      "name": "tlog",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "e3e9f787-9433-4a3c-9e6a-befe1547285c",
+          "name": "Get information about the current state of the transparency log",
+          "request": {
+            "name": "Get information about the current state of the transparency log",
+            "description": {
+              "content": "Returns the current root hash and size of the merkle tree used to store the log entries.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "log"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b9f886bf-6e23-429b-9656-2b55c09f4e47",
+              "name": "A JSON object with the root hash and tree size as properties",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "log"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"rootHash\": \"dCaC420bE22ef5663773B9382FC0e6a8bc3a1615cA7EBe0dAa673CE6d2aEBafA\",\n  \"treeSize\": 2794,\n  \"signedTreeHead\": \"string\",\n  \"treeID\": \"827978053\",\n  \"inactiveShards\": [\n    {\n      \"rootHash\": \"Fb499e51d8ecD34B667a20CB0637Dcfda1E3493cfaeFD5924DBbD8bda49c26fB\",\n      \"treeSize\": 9227,\n      \"signedTreeHead\": \"string\",\n      \"treeID\": \"238\"\n    },\n    {\n      \"rootHash\": \"0F6Bfdcf4f9705eE600CFf53eaA1817ffccE5AeedCcaE3aB78E121f3aCE5A775\",\n      \"treeSize\": 283,\n      \"signedTreeHead\": \"string\",\n      \"treeID\": \"53375858\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "223b1a3d-3e7a-4fcd-9b2a-833263c07a72",
+              "name": "There was an internal error in the server while processing the request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "log"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 2469,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9168bf69-9aae-43bf-a5cf-5bb0a995b3f7",
+          "name": "Get information required to generate a consistency proof for the transparency log",
+          "request": {
+            "name": "Get information required to generate a consistency proof for the transparency log",
+            "description": {
+              "content": "Returns a list of hashes for specified tree sizes that can be used to confirm the consistency of the transparency log",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "log",
+                "proof"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "firstSize",
+                  "value": "1",
+                  "description": "The size of the tree that you wish to prove consistency from (1 means the beginning of the log) Defaults to 1 if not specified\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "lastSize",
+                  "value": "<integer>",
+                  "description": "(Required) The size of the tree that you wish to prove consistency to"
+                },
+                {
+                  "disabled": false,
+                  "key": "treeID",
+                  "value": "<string>",
+                  "description": "The tree ID of the tree that you wish to prove consistency for"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f2c64469-96a8-4775-8a5c-5d83098f1485",
+              "name": "All hashes required to compute the consistency proof",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "log",
+                    "proof"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "firstSize",
+                      "value": "1"
+                    },
+                    {
+                      "key": "lastSize",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "treeID",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"rootHash\": \"6e3a3eB1999c1BFfAB7c82B12Dc773c4efCdE091c8191847cee1E70D78F61BAF\",\n  \"hashes\": [\n    \"964ee9F1cd8afB2d3DcA0BBaF4f33D3ee1B05C1c6e696A7E329A43e6aA3e679C\",\n    \"3CC6C7123D31Eda3aEeEe3ffE6DeC0E44Aea44D2FfE4EdAFc01e2aDE0de0DB7B\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "01d159a0-f7ad-4031-9b05-e6b2b1d3c002",
+              "name": "The content supplied to the server was invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "log",
+                    "proof"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "firstSize",
+                      "value": "1"
+                    },
+                    {
+                      "key": "lastSize",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "treeID",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 2469,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "af957883-c969-4524-aca0-74044ed4d798",
+              "name": "There was an internal error in the server while processing the request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "log",
+                    "proof"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "firstSize",
+                      "value": "1"
+                    },
+                    {
+                      "key": "lastSize",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "treeID",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 2469,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://fulcio.sigstore.dev",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "a7f4cc8e-2698-4a24-a098-f6aa9746ff65",
+    "name": "Fulcio CA tlog API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Contact Support:\n Name: sigstore Fulcio project\n Email: sigstore-dev@googlegroups.com",
+      "type": "text/plain"
+    }
+  }
+}

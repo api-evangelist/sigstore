@@ -1,0 +1,869 @@
+{
+  "item": [
+    {
+      "id": "9eace511-cb28-45ee-860c-697215efa293",
+      "name": "entries",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "095d6513-71b9-40d7-a47e-10fbe26273a7",
+          "name": "Creates an entry in the transparency log",
+          "request": {
+            "name": "Creates an entry in the transparency log",
+            "description": {
+              "content": "Creates an entry in the transparency log for a detached signature, public key, and content.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "log",
+                "entries"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"kind\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "3d8c54f1-af58-43cd-9b41-16611be1decc",
+              "name": "Returns the entry created in the transparency log",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "log",
+                    "entries"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"kind\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "UUID of log entry",
+                  "key": "ETag",
+                  "value": "string"
+                },
+                {
+                  "disabled": false,
+                  "description": "URI location of log entry",
+                  "key": "Location",
+                  "value": "https://RiDbFGUYvmhuABcAiPyhid.vxgQVtDNACgPoXSlwrTF1vaQKGVDY7VfJTs8nPR992gv4LGP4l3uyj71V65V9K"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": {\n    \"logID\": \"FB47D11Fd23d28f79B6fFA2d7b03DDE0DAd8A7E7C6fa77cAeD7D80A4508f8df9\",\n    \"logIndex\": 5536,\n    \"body\": {\n      \"key_0\": 6120\n    },\n    \"integratedTime\": 7029,\n    \"attestation\": {\n      \"data\": {}\n    },\n    \"verification\": {\n      \"inclusionProof\": {\n        \"logIndex\": 445,\n        \"rootHash\": \"EBfF02B1D0Ea2FaDEacBa1A72A8A36bC899DC7FbB81F9b0de951ca3cc1bf6a7d\",\n        \"treeSize\": 8425,\n        \"hashes\": [\n          \"4b2B520C13fD0aB67b7C2E07676D0dc9ae6cDD8e0Cfe9A13A98cff93Dd6Aaf1a\",\n          \"Be72ae6DBDEb81b739fAF2b3CAc52Ed665A3B7f74acDB1DbCFf1BeAAFf03E29c\"\n        ],\n        \"checkpoint\": \"string\"\n      },\n      \"signedEntryTimestamp\": \"string\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f31c5f41-33cb-4025-b3f1-98752d4e0076",
+              "name": "The content supplied to the server was invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "log",
+                    "entries"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"kind\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 5953,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0c8580d4-ea3c-4aad-a90d-bcd797896789",
+              "name": "The request conflicts with the current state of the transparency log",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "log",
+                    "entries"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"kind\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "disabled": false,
+                  "key": "Location",
+                  "value": "https://RiDbFGUYvmhuABcAiPyhid.vxgQVtDNACgPoXSlwrTF1vaQKGVDY7VfJTs8nPR992gv4LGP4l3uyj71V65V9K",
+                  "description": ""
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 5953,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c320e58b-f603-44ca-8e2c-3d08e2e43c8a",
+              "name": "There was an internal error in the server while processing the request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "log",
+                    "entries"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"kind\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 5953,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0cf31e27-7c81-4e4c-945b-052686533c53",
+          "name": "Retrieves an entry and inclusion proof from the transparency log (if it exists) by index",
+          "request": {
+            "name": "Retrieves an entry and inclusion proof from the transparency log (if it exists) by index",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "log",
+                "entries"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "logIndex",
+                  "value": "<integer>",
+                  "description": "(Required) specifies the index of the entry in the transparency log to be retrieved"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "99f7a708-5cd0-42f7-a9f6-ebe049356f42",
+              "name": "the entry in the transparency log requested along with an inclusion proof",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "log",
+                    "entries"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "logIndex",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": {\n    \"logID\": \"9ec4D9Def4BbeFE05Ce5C3B6721Eb1C0FAfcbf4DAcCB756123e5F80F6044f88a\",\n    \"logIndex\": 9737,\n    \"body\": {\n      \"key_0\": 4100\n    },\n    \"integratedTime\": 1625,\n    \"attestation\": {\n      \"data\": {}\n    },\n    \"verification\": {\n      \"inclusionProof\": {\n        \"logIndex\": 5498,\n        \"rootHash\": \"2DDF7A02b9c71f8C61AC7BE6dFD49cc9C9E4CabF3d8b7faDC0995A6F0b6732cF\",\n        \"treeSize\": 2794,\n        \"hashes\": [\n          \"38cecAA767d8e4954AEcA430ace2C37e52CC651CEa9445f0411578f58c5af5aB\",\n          \"4d4C890Ed9E0798eFdCadac69e8371103F8d6b9152e1B5e7Ad0ccAB47E681Fb9\"\n        ],\n        \"checkpoint\": \"string\"\n      },\n      \"signedEntryTimestamp\": \"string\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c3654f30-5f9b-4e8a-bff1-8df8707fc90f",
+              "name": "The content requested could not be found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "log",
+                    "entries"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "logIndex",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "94516659-5160-4eb8-b37b-2e30926c4a7f",
+              "name": "There was an internal error in the server while processing the request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "log",
+                    "entries"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "logIndex",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 5953,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "35914cab-ab2b-4988-becd-96def45e04f1",
+          "name": "Get log entry and information required to generate an inclusion proof for the entry in the transparency log",
+          "request": {
+            "name": "Get log entry and information required to generate an inclusion proof for the entry in the transparency log",
+            "description": {
+              "content": "Returns the entry, root hash, tree size, and a list of hashes that can be used to calculate proof of an entry being included in the transparency log",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "log",
+                "entries",
+                ":entryUUID"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "entryUUID",
+                  "description": "(Required) the UUID of the entry for which the inclusion proof information should be returned"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "1248e5b5-e7c3-4838-bbe5-e97a44bda8e2",
+              "name": "Information needed for a client to compute the inclusion proof",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "log",
+                    "entries",
+                    ":entryUUID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "entryUUID",
+                      "description": "(Required) the UUID of the entry for which the inclusion proof information should be returned"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": {\n    \"logID\": \"9ec4D9Def4BbeFE05Ce5C3B6721Eb1C0FAfcbf4DAcCB756123e5F80F6044f88a\",\n    \"logIndex\": 9737,\n    \"body\": {\n      \"key_0\": 4100\n    },\n    \"integratedTime\": 1625,\n    \"attestation\": {\n      \"data\": {}\n    },\n    \"verification\": {\n      \"inclusionProof\": {\n        \"logIndex\": 5498,\n        \"rootHash\": \"2DDF7A02b9c71f8C61AC7BE6dFD49cc9C9E4CabF3d8b7faDC0995A6F0b6732cF\",\n        \"treeSize\": 2794,\n        \"hashes\": [\n          \"38cecAA767d8e4954AEcA430ace2C37e52CC651CEa9445f0411578f58c5af5aB\",\n          \"4d4C890Ed9E0798eFdCadac69e8371103F8d6b9152e1B5e7Ad0ccAB47E681Fb9\"\n        ],\n        \"checkpoint\": \"string\"\n      },\n      \"signedEntryTimestamp\": \"string\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "517f3201-2835-4664-b92b-751e7220c5b9",
+              "name": "The content requested could not be found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "log",
+                    "entries",
+                    ":entryUUID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "entryUUID",
+                      "description": "(Required) the UUID of the entry for which the inclusion proof information should be returned"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "5037004c-6c87-461a-a61e-f27a5bdc186f",
+              "name": "There was an internal error in the server while processing the request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "log",
+                    "entries",
+                    ":entryUUID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "entryUUID",
+                      "description": "(Required) the UUID of the entry for which the inclusion proof information should be returned"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 5953,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ea4781b9-2b69-4486-b4ea-762fb5c87502",
+          "name": "Searches transparency log for one or more log entries",
+          "request": {
+            "name": "Searches transparency log for one or more log entries",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "log",
+                "entries",
+                "retrieve"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"entryUUIDs\": [\n    \"<string>\"\n  ],\n  \"logIndexes\": [\n    \"<integer>\"\n  ],\n  \"entries\": [\n    {\n      \"kind\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "35eece8e-9007-4732-8b81-93a0e12e7bc2",
+              "name": "Returns zero or more entries from the transparency log, according to how many were included in request query",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "log",
+                    "entries",
+                    "retrieve"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"entryUUIDs\": [\n    \"<string>\"\n  ],\n  \"logIndexes\": [\n    \"<integer>\"\n  ],\n  \"entries\": [\n    {\n      \"kind\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"key_0\": {\n      \"logID\": \"E43ca3916edADd3AEd1deA364dbEcCe8b6c51eb39Fd9a87DD1d5dcF7aaE7Ee6D\",\n      \"logIndex\": 4010,\n      \"body\": {\n        \"key_0\": \"string\",\n        \"key_1\": false,\n        \"key_2\": \"string\"\n      },\n      \"integratedTime\": 2309,\n      \"attestation\": {\n        \"data\": {}\n      },\n      \"verification\": {\n        \"inclusionProof\": {\n          \"logIndex\": 5516,\n          \"rootHash\": \"e8E9abb9f495ca687dE5aF4B57b4D82E4F601F48ecFEbA22D9117c0Be25E5c40\",\n          \"treeSize\": 727,\n          \"hashes\": [\n            \"71b224Fca808f6FbE9Ecd1C2dc0eFda63E0F9E5e02F9dd06d34cbb2a9B9efcD4\",\n            \"296f7AA5BAe2cFF1BbAAEB8DcDE7B7dfB1CC539B314a22BaaE641eeDaB0FeDac\"\n          ],\n          \"checkpoint\": \"string\"\n        },\n        \"signedEntryTimestamp\": \"string\"\n      }\n    },\n    \"key_1\": {\n      \"logID\": \"BAa6Cb4Babddd6FfAD56098BCd2bEE08a7B90815C4fd1414E3eF6F149CEb5e5f\",\n      \"logIndex\": 5072,\n      \"body\": {\n        \"key_0\": 716.9996751109364\n      },\n      \"integratedTime\": 1600,\n      \"attestation\": {\n        \"data\": {}\n      },\n      \"verification\": {\n        \"inclusionProof\": {\n          \"logIndex\": 6070,\n          \"rootHash\": \"e39d3dFD6EEd3cDFFd5b03CAEc1D39Dbe7F45cDCfC4E4e7BA1527F379dF3f459\",\n          \"treeSize\": 1414,\n          \"hashes\": [\n            \"59c5CECb87ec1c5e1fEE4d1dcfb8acc8fb8a6d7FF0645eB394c141FB09efa3C6\",\n            \"aA839AB22ec12C0fb6c9F0Db9d0FCd9779537C2BEb1e9A2FBA9500D456EB65C0\"\n          ],\n          \"checkpoint\": \"string\"\n        },\n        \"signedEntryTimestamp\": \"string\"\n      }\n    }\n  },\n  {\n    \"key_0\": {\n      \"logID\": \"8dBdEFcba0bdabD77A1E67B74bCAf3E0aAdcba406d31BB0f10e0BAaB6bFBFF12\",\n      \"logIndex\": 4411,\n      \"body\": {\n        \"key_0\": true,\n        \"key_1\": \"string\"\n      },\n      \"integratedTime\": 8625,\n      \"attestation\": {\n        \"data\": {}\n      },\n      \"verification\": {\n        \"inclusionProof\": {\n          \"logIndex\": 9059,\n          \"rootHash\": \"8ef7Ec6F9b36B204F7aFFfAE65EbA7fEADbF9b2f748049d8d1Fa1Ef9Cd2CF48D\",\n          \"treeSize\": 358,\n          \"hashes\": [\n            \"cFeC6F5Dc1e53dCeCe8E09a9ED2ee5E55a76a9057d7bf7FcADec0CdB4eBFEeCE\",\n            \"F8e5eCECC2a2FA0a59fAeE4ca2bD2E6CaD62E7dA5C7abC29bF2a6bAAA791a7a8\"\n          ],\n          \"checkpoint\": \"string\"\n        },\n        \"signedEntryTimestamp\": \"string\"\n      }\n    }\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "aedffe3d-95e7-4aea-bcaf-f5e134d6203e",
+              "name": "The content supplied to the server was invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "log",
+                    "entries",
+                    "retrieve"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"entryUUIDs\": [\n    \"<string>\"\n  ],\n  \"logIndexes\": [\n    \"<integer>\"\n  ],\n  \"entries\": [\n    {\n      \"kind\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 5953,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ef58e15e-f841-45e8-8525-3d78f286c536",
+              "name": "The server understood the request but is unable to process the contained instructions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "log",
+                    "entries",
+                    "retrieve"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"entryUUIDs\": [\n    \"<string>\"\n  ],\n  \"logIndexes\": [\n    \"<integer>\"\n  ],\n  \"entries\": [\n    {\n      \"kind\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 5953,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6bd4a3d1-97d0-4fab-9cae-51e2ff1678b6",
+              "name": "There was an internal error in the server while processing the request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "log",
+                    "entries",
+                    "retrieve"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"entryUUIDs\": [\n    \"<string>\"\n  ],\n  \"logIndexes\": [\n    \"<integer>\"\n  ],\n  \"entries\": [\n    {\n      \"kind\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 5953,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://fulcio.sigstore.dev",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "a0d6f843-fa81-4a7b-b9bf-08698d448f26",
+    "name": "Fulcio CA entries API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Contact Support:\n Name: sigstore Fulcio project\n Email: sigstore-dev@googlegroups.com",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Fulcio CA tlog API",
+    "version": "2.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "tlog",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get information about the current state of the transparency log",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/log"
+          },
+          "docs": "Returns the current root hash and size of the merkle tree used to store the log entries."
+        },
+        {
+          "info": {
+            "name": "Get information required to generate a consistency proof for the transparency log",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/log/proof",
+            "params": [
+              {
+                "name": "firstSize",
+                "value": "",
+                "type": "query",
+                "description": "The size of the tree that you wish to prove consistency from (1 means the beginning of the log) Defaults to 1 if not specified\n"
+              },
+              {
+                "name": "lastSize",
+                "value": "",
+                "type": "query",
+                "description": "The size of the tree that you wish to prove consistency to"
+              },
+              {
+                "name": "treeID",
+                "value": "",
+                "type": "query",
+                "description": "The tree ID of the tree that you wish to prove consistency for"
+              }
+            ]
+          },
+          "docs": "Returns a list of hashes for specified tree sizes that can be used to confirm the consistency of the transparency log"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
