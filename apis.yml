@@ -24,6 +24,16 @@ tags:
   - Code Signing
   - Containers
   - Cryptography
+  - Open-Source
+  - PKI
+  - Security
+  - Software Supply Chain
+  - Transparency Log
+tags_raw:
+  - Certificate Authority
+  - Code Signing
+  - Containers
+  - Cryptography
   - Open Source
   - PKI
   - Security
@@ -79,6 +89,8 @@ apis:
   humanURL: https://docs.sigstore.dev/logging/overview/
   baseURL: https://rekor.sigstore.dev
   tags:
+  - Entries
+  tags_raw:
   - entries
   properties:
   - type: OpenAPI
@@ -100,6 +112,8 @@ apis:
   humanURL: https://docs.sigstore.dev/logging/overview/
   baseURL: https://rekor.sigstore.dev
   tags:
+  - Index
+  tags_raw:
   - index
   properties:
   - type: OpenAPI
@@ -121,6 +135,8 @@ apis:
   humanURL: https://docs.sigstore.dev/logging/overview/
   baseURL: https://rekor.sigstore.dev
   tags:
+  - Pubkey
+  tags_raw:
   - pubkey
   properties:
   - type: OpenAPI
