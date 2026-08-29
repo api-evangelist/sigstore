@@ -1,21 +1,10 @@
-swagger: '2.0'
+openapi: 3.2.0
 info:
-  title: Fulcio CA pubkey API
-  version: 2.0.0
-  contact:
-    name: sigstore Fulcio project
-    url: https://github.com/sigstore/fulcio
-    email: sigstore-dev@googlegroups.com
-  license:
-    name: Apache License 2.0
-    url: https://github.com/sigstore/fulcio/blob/main/LICENSE
-host: fulcio.sigstore.dev
-schemes:
-- http
-consumes:
-- application/json
-produces:
-- application/json
+  title: Rekor Pubkey API
+  description: Rekor is a cryptographically secure, immutable transparency log for signed software releases.
+  version: 1.0.0
+servers:
+- url: http://rekor.sigstore.dev
 tags:
 - name: pubkey
 paths:
@@ -29,31 +18,32 @@ paths:
       parameters:
       - in: query
         name: treeID
-        type: string
-        pattern: ^[0-9]+$
         description: The tree ID of the tree you wish to get a public key for
-      produces:
-      - application/x-pem-file
+        schema:
+          type: string
+          pattern: ^[0-9]+$
       responses:
         200:
           description: The public key
-          schema:
-            type: string
+          content:
+            application/x-pem-file:
+              schema:
+                type: string
         default:
-          $ref: '#/responses/InternalServerError'
-definitions:
-  Error:
-    type: object
-    properties:
-      code:
-        type: integer
-      message:
-        type: string
-responses:
-  InternalServerError:
-    description: There was an internal error in the server while processing the request
-    schema:
-      $ref: '#/definitions/Error'
-externalDocs:
-  description: More about Fulcio
-  url: https://github.com/sigstore/fulcio
+          $ref: '#/components/responses/InternalServerError'
+components:
+  responses:
+    InternalServerError:
+      description: There was an internal error in the server while processing the request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+        message:
+          type: string

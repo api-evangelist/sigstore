@@ -1,11 +1,8 @@
 {
   "provider": "sigstore",
   "sources": [
-    "sigstore-ca-api-openapi.yml",
-    "sigstore-entries-api-openapi.yml",
-    "sigstore-index-api-openapi.yml",
-    "sigstore-pubkey-api-openapi.yml",
-    "sigstore-tlog-api-openapi.yml"
+    "_original/fulcio-openapi.json",
+    "_original/rekor-openapi.yaml"
   ],
   "outputs": [
     "sigstore-ca-api-openapi.yml",
@@ -17,6 +14,20 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (2 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "fulcio-openapi.json: upgraded swagger 2.0 -> OpenAPI 3.2.0",
+    "rekor-openapi.yaml: upgraded swagger 2.0 -> OpenAPI 3.2.0",
+    "rekor-openapi.yaml: declared missing tag: entries",
+    "rekor-openapi.yaml: declared missing tag: index",
+    "rekor-openapi.yaml: declared missing tag: pubkey",
+    "rekor-openapi.yaml: declared missing tag: tlog"
+  ],
+  "skipped": [
+    "sigstore-ca-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "sigstore-entries-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "sigstore-index-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "sigstore-pubkey-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "sigstore-tlog-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

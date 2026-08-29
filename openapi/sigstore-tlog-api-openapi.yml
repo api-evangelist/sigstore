@@ -1,21 +1,10 @@
-swagger: '2.0'
+openapi: 3.2.0
 info:
-  title: Fulcio CA tlog API
-  version: 2.0.0
-  contact:
-    name: sigstore Fulcio project
-    url: https://github.com/sigstore/fulcio
-    email: sigstore-dev@googlegroups.com
-  license:
-    name: Apache License 2.0
-    url: https://github.com/sigstore/fulcio/blob/main/LICENSE
-host: fulcio.sigstore.dev
-schemes:
-- http
-consumes:
-- application/json
-produces:
-- application/json
+  title: Rekor Tlog API
+  description: Rekor is a cryptographically secure, immutable transparency log for signed software releases.
+  version: 1.0.0
+servers:
+- url: http://rekor.sigstore.dev
 tags:
 - name: tlog
 paths:
@@ -29,10 +18,12 @@ paths:
       responses:
         200:
           description: A JSON object with the root hash and tree size as properties
-          schema:
-            $ref: '#/definitions/LogInfo'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LogInfo'
         default:
-          $ref: '#/responses/InternalServerError'
+          $ref: '#/components/responses/InternalServerError'
   /api/v1/log/proof:
     get:
       summary: Get information required to generate a consistency proof for the transparency log
@@ -43,117 +34,124 @@ paths:
       parameters:
       - in: query
         name: firstSize
-        type: integer
-        default: 1
-        minimum: 1
         description: 'The size of the tree that you wish to prove consistency from (1 means the beginning of the log) Defaults to 1 if not specified
 
           '
+        schema:
+          type: integer
+          default: 1
+          minimum: 1
       - in: query
         name: lastSize
-        type: integer
         required: true
-        minimum: 1
         description: The size of the tree that you wish to prove consistency to
+        schema:
+          type: integer
+          minimum: 1
       - in: query
         name: treeID
-        type: string
-        pattern: ^[0-9]+$
         description: The tree ID of the tree that you wish to prove consistency for
+        schema:
+          type: string
+          pattern: ^[0-9]+$
       responses:
         200:
           description: All hashes required to compute the consistency proof
-          schema:
-            $ref: '#/definitions/ConsistencyProof'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConsistencyProof'
         400:
-          $ref: '#/responses/BadContent'
+          $ref: '#/components/responses/BadContent'
         default:
-          $ref: '#/responses/InternalServerError'
-definitions:
-  InactiveShardLogInfo:
-    type: object
-    properties:
-      rootHash:
-        type: string
-        description: The current hash value stored at the root of the merkle tree
-        pattern: ^[0-9a-fA-F]{64}$
-      treeSize:
-        type: integer
-        description: The current number of nodes in the merkle tree
-        minimum: 1
-      signedTreeHead:
-        type: string
-        format: signedCheckpoint
-        description: The current signed tree head
-      treeID:
-        type: string
-        description: The current treeID
-        pattern: ^[0-9]+$
-    required:
-    - rootHash
-    - treeSize
-    - signedTreeHead
-    - treeID
-  LogInfo:
-    type: object
-    properties:
-      rootHash:
-        type: string
-        description: The current hash value stored at the root of the merkle tree
-        pattern: ^[0-9a-fA-F]{64}$
-      treeSize:
-        type: integer
-        description: The current number of nodes in the merkle tree
-        minimum: 1
-      signedTreeHead:
-        type: string
-        format: signedCheckpoint
-        description: The current signed tree head
-      treeID:
-        type: string
-        description: The current treeID
-        pattern: ^[0-9]+$
-      inactiveShards:
-        type: array
-        items:
-          $ref: '#/definitions/InactiveShardLogInfo'
-    required:
-    - rootHash
-    - treeSize
-    - signedTreeHead
-    - treeID
-  ConsistencyProof:
-    type: object
-    properties:
-      rootHash:
-        type: string
-        description: The hash value stored at the root of the merkle tree at the time the proof was generated
-        pattern: ^[0-9a-fA-F]{64}$
-      hashes:
-        type: array
-        items:
+          $ref: '#/components/responses/InternalServerError'
+components:
+  responses:
+    BadContent:
+      description: The content supplied to the server was invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    InternalServerError:
+      description: There was an internal error in the server while processing the request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    ConsistencyProof:
+      type: object
+      properties:
+        rootHash:
           type: string
-          description: SHA256 hash value expressed in hexadecimal format
+          description: The hash value stored at the root of the merkle tree at the time the proof was generated
           pattern: ^[0-9a-fA-F]{64}$
-    required:
-    - rootHash
-    - hashes
-  Error:
-    type: object
-    properties:
-      code:
-        type: integer
-      message:
-        type: string
-responses:
-  InternalServerError:
-    description: There was an internal error in the server while processing the request
-    schema:
-      $ref: '#/definitions/Error'
-  BadContent:
-    description: The content supplied to the server was invalid
-    schema:
-      $ref: '#/definitions/Error'
-externalDocs:
-  description: More about Fulcio
-  url: https://github.com/sigstore/fulcio
+        hashes:
+          type: array
+          items:
+            type: string
+            description: SHA256 hash value expressed in hexadecimal format
+            pattern: ^[0-9a-fA-F]{64}$
+      required:
+      - rootHash
+      - hashes
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+        message:
+          type: string
+    InactiveShardLogInfo:
+      type: object
+      properties:
+        rootHash:
+          type: string
+          description: The current hash value stored at the root of the merkle tree
+          pattern: ^[0-9a-fA-F]{64}$
+        treeSize:
+          type: integer
+          description: The current number of nodes in the merkle tree
+          minimum: 1
+        signedTreeHead:
+          type: string
+          format: signedCheckpoint
+          description: The current signed tree head
+        treeID:
+          type: string
+          description: The current treeID
+          pattern: ^[0-9]+$
+      required:
+      - rootHash
+      - treeSize
+      - signedTreeHead
+      - treeID
+    LogInfo:
+      type: object
+      properties:
+        rootHash:
+          type: string
+          description: The current hash value stored at the root of the merkle tree
+          pattern: ^[0-9a-fA-F]{64}$
+        treeSize:
+          type: integer
+          description: The current number of nodes in the merkle tree
+          minimum: 1
+        signedTreeHead:
+          type: string
+          format: signedCheckpoint
+          description: The current signed tree head
+        treeID:
+          type: string
+          description: The current treeID
+          pattern: ^[0-9]+$
+        inactiveShards:
+          type: array
+          items:
+            $ref: '#/components/schemas/InactiveShardLogInfo'
+      required:
+      - rootHash
+      - treeSize
+      - signedTreeHead
+      - treeID
