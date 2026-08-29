@@ -6,6 +6,19 @@ description: >-
   signing keys, making software supply chain security more accessible. The Sigstore ecosystem includes Cosign for
   artifact signing, Fulcio as the certificate authority, and Rekor as the cryptographically secure transparency log.
 type: Index
+deliveryModel:
+  model: self-hosted
+  license: Apache-2.0
+  open_source: true
+  commercial: false
+  callable_host: true
+  label: Self-hosted open source · you run it yourself
+  confidence: high
+  source:
+  - license
+  - openapi
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: paid
   onboarding: unknown
@@ -174,6 +187,14 @@ apis:
   - type: GitHubRepository
     url: https://github.com/sigstore/fulcio
 common:
+  - type: IssueTracker
+    url: https://github.com/sigstore/cosign/issues
+  - type: Releases
+    url: https://github.com/sigstore/cosign/releases
+  - type: CodeOfConduct
+    url: https://github.com/sigstore/cosign/blob/main/CODE_OF_CONDUCT.md
+  - type: ContributionGuide
+    url: https://github.com/sigstore/cosign/blob/main/CONTRIBUTING.md
   - type: License
     name: Apache-2.0
     url: https://github.com/sigstore/cosign/blob/main/LICENSE
