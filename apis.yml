@@ -102,7 +102,7 @@ apis:
   humanURL: https://docs.sigstore.dev/logging/overview/
   baseURL: https://rekor.sigstore.dev
   tags:
-  - entries
+  - Entries
   tags_raw:
   - entries
   properties:
@@ -148,7 +148,7 @@ apis:
   humanURL: https://docs.sigstore.dev/logging/overview/
   baseURL: https://rekor.sigstore.dev
   tags:
-  - pubkey
+  - Pubkey
   tags_raw:
   - pubkey
   properties:
