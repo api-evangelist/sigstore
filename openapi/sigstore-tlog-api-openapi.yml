@@ -26,7 +26,7 @@ paths:
           $ref: '#/components/responses/InternalServerError'
   /api/v1/log/proof:
     get:
-      summary: Get information required to generate a consistency proof for the transparency log
+      summary: Get information required to generate a consistency proof for the transparency…
       description: Returns a list of hashes for specified tree sizes that can be used to confirm the consistency of the transparency log
       operationId: getLogProof
       tags:
@@ -66,43 +66,7 @@ paths:
         default:
           $ref: '#/components/responses/InternalServerError'
 components:
-  responses:
-    BadContent:
-      description: The content supplied to the server was invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    InternalServerError:
-      description: There was an internal error in the server while processing the request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
-    ConsistencyProof:
-      type: object
-      properties:
-        rootHash:
-          type: string
-          description: The hash value stored at the root of the merkle tree at the time the proof was generated
-          pattern: ^[0-9a-fA-F]{64}$
-        hashes:
-          type: array
-          items:
-            type: string
-            description: SHA256 hash value expressed in hexadecimal format
-            pattern: ^[0-9a-fA-F]{64}$
-      required:
-      - rootHash
-      - hashes
-    Error:
-      type: object
-      properties:
-        code:
-          type: integer
-        message:
-          type: string
     InactiveShardLogInfo:
       type: object
       properties:
@@ -155,3 +119,39 @@ components:
       - treeSize
       - signedTreeHead
       - treeID
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+        message:
+          type: string
+    ConsistencyProof:
+      type: object
+      properties:
+        rootHash:
+          type: string
+          description: The hash value stored at the root of the merkle tree at the time the proof was generated
+          pattern: ^[0-9a-fA-F]{64}$
+        hashes:
+          type: array
+          items:
+            type: string
+            description: SHA256 hash value expressed in hexadecimal format
+            pattern: ^[0-9a-fA-F]{64}$
+      required:
+      - rootHash
+      - hashes
+  responses:
+    BadContent:
+      description: The content supplied to the server was invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    InternalServerError:
+      description: There was an internal error in the server while processing the request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'

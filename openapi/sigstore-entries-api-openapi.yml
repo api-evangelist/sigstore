@@ -6,17 +6,15 @@ info:
 servers:
 - url: http://rekor.sigstore.dev
 tags:
-- name: entries
+- name: Entries
 paths:
   /api/v1/log/entries:
     post:
       summary: Creates an entry in the transparency log
-      description: 'Creates an entry in the transparency log for a detached signature, public key, and content.
-
-        '
+      description: Creates an entry in the transparency log for a detached signature, public key, and content.
       operationId: createLogEntry
       tags:
-      - entries
+      - Entries
       responses:
         201:
           description: Returns the entry created in the transparency log
@@ -47,10 +45,10 @@ paths:
               $ref: '#/components/schemas/ProposedEntry'
         required: true
     get:
-      summary: Retrieves an entry and inclusion proof from the transparency log (if it exists) by index
+      summary: Retrieves an entry and inclusion proof from the transparency log (if it exists)…
       operationId: getLogEntryByIndex
       tags:
-      - entries
+      - Entries
       parameters:
       - in: query
         name: logIndex
@@ -72,11 +70,11 @@ paths:
           $ref: '#/components/responses/InternalServerError'
   /api/v1/log/entries/{entryUUID}:
     get:
-      summary: Get log entry and information required to generate an inclusion proof for the entry in the transparency log
+      summary: Get log entry and information required to generate an inclusion proof for the…
       description: Returns the entry, root hash, tree size, and a list of hashes that can be used to calculate proof of an entry being included in the transparency log
       operationId: getLogEntryByUUID
       tags:
-      - entries
+      - Entries
       parameters:
       - in: path
         name: entryUUID
@@ -101,7 +99,7 @@ paths:
       summary: Searches transparency log for one or more log entries
       operationId: searchLogQuery
       tags:
-      - entries
+      - Entries
       responses:
         200:
           description: Returns zero or more entries from the transparency log, according to how many were included in request query
@@ -134,6 +132,44 @@ components:
           type: string
       required:
       - kind
+    LogEntry:
+      type: object
+      additionalProperties:
+        type: object
+        properties:
+          logID:
+            type: string
+            pattern: ^[0-9a-fA-F]{64}$
+            description: This is the SHA256 hash of the DER-encoded public key for the log at the time the entry was included in the log
+          logIndex:
+            type: integer
+            minimum: 0
+          body:
+            type: object
+            additionalProperties: true
+          integratedTime:
+            type: integer
+            description: The time the entry was added to the log as a Unix timestamp in seconds
+          attestation:
+            type: object
+            properties:
+              data:
+                format: byte
+            format: byte
+          verification:
+            type: object
+            properties:
+              inclusionProof:
+                $ref: '#/components/schemas/InclusionProof'
+              signedEntryTimestamp:
+                type: string
+                format: byte
+                description: Signature over the logID, logIndex, body and integratedTime.
+        required:
+        - logID
+        - logIndex
+        - body
+        - integratedTime
     SearchLogQuery:
       type: object
       properties:
@@ -189,44 +225,6 @@ components:
       - treeSize
       - hashes
       - checkpoint
-    LogEntry:
-      type: object
-      additionalProperties:
-        type: object
-        properties:
-          logID:
-            type: string
-            pattern: ^[0-9a-fA-F]{64}$
-            description: This is the SHA256 hash of the DER-encoded public key for the log at the time the entry was included in the log
-          logIndex:
-            type: integer
-            minimum: 0
-          body:
-            type: object
-            additionalProperties: true
-          integratedTime:
-            type: integer
-            description: The time the entry was added to the log as a Unix timestamp in seconds
-          attestation:
-            type: object
-            properties:
-              data:
-                format: byte
-            format: byte
-          verification:
-            type: object
-            properties:
-              inclusionProof:
-                $ref: '#/components/schemas/InclusionProof'
-              signedEntryTimestamp:
-                type: string
-                format: byte
-                description: Signature over the logID, logIndex, body and integratedTime.
-        required:
-        - logID
-        - logIndex
-        - body
-        - integratedTime
     Error:
       type: object
       properties:
@@ -241,20 +239,6 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    InternalServerError:
-      description: There was an internal error in the server while processing the request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadContent:
-      description: The content supplied to the server was invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: The content requested could not be found
     Conflict:
       description: The request conflicts with the current state of the transparency log
       headers:
@@ -266,3 +250,17 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+    BadContent:
+      description: The content supplied to the server was invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    InternalServerError:
+      description: There was an internal error in the server while processing the request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The content requested could not be found

@@ -21,7 +21,8 @@
     "rekor-openapi.yaml: declared missing tag: entries",
     "rekor-openapi.yaml: declared missing tag: index",
     "rekor-openapi.yaml: declared missing tag: pubkey",
-    "rekor-openapi.yaml: declared missing tag: tlog"
+    "rekor-openapi.yaml: declared missing tag: tlog",
+    "apis.yml register: already-registered"
   ],
   "skipped": [
     "sigstore-ca-api-openapi.yml: previously refined output, superseded by openapi/_original/",

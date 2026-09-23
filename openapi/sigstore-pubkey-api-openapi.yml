@@ -6,7 +6,7 @@ info:
 servers:
 - url: http://rekor.sigstore.dev
 tags:
-- name: pubkey
+- name: Pubkey
 paths:
   /api/v1/log/publicKey:
     get:
@@ -14,7 +14,7 @@ paths:
       description: Returns the public key that can be used to validate the signed tree head
       operationId: getPublicKey
       tags:
-      - pubkey
+      - Pubkey
       parameters:
       - in: query
         name: treeID

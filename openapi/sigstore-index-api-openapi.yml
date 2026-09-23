@@ -6,20 +6,18 @@ info:
 servers:
 - url: http://rekor.sigstore.dev
 tags:
-- name: index
+- name: Index
 paths:
   /api/v1/index/retrieve:
     post:
       summary: Searches index by entry metadata
       description: 'EXPERIMENTAL - this endpoint is offered as best effort only and may be changed or removed in future releases.
 
-        The results returned from this endpoint may be incomplete.
-
-        '
+        The results returned from this endpoint may be incomplete.'
       deprecated: true
       operationId: searchIndex
       tags:
-      - index
+      - Index
       responses:
         200:
           description: Returns zero or more entry UUIDs from the transparency log based on search query
