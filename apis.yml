@@ -37,7 +37,7 @@ tags:
   - Code Signing
   - Containers
   - Cryptography
-  - Open-Source
+  - Open Source
   - PKI
   - Security
   - Software Supply Chain
@@ -52,6 +52,7 @@ tags_raw:
   - Security
   - Software Supply Chain
   - Transparency Log
+  - Open-Source
 url: https://raw.githubusercontent.com/api-evangelist/sigstore/refs/heads/main/apis.yml
 created: '2026-03-26'
 modified: '2026-05-19'
@@ -97,7 +98,7 @@ apis:
   - type: GitHubRepository
     url: https://github.com/sigstore/fulcio
 - aid: sigstore:sigstore-entries-api
-  name: Sigstore entries API
+  name: Sigstore Entries API
   description: The entries API from Sigstore — 3 operation(s) for entries.
   humanURL: https://docs.sigstore.dev/logging/overview/
   baseURL: https://rekor.sigstore.dev
@@ -120,7 +121,7 @@ apis:
   - type: GitHubRepository
     url: https://github.com/sigstore/fulcio
 - aid: sigstore:sigstore-index-api
-  name: Sigstore index API
+  name: Sigstore Index API
   description: The index API from Sigstore — 1 operation(s) for index.
   humanURL: https://docs.sigstore.dev/logging/overview/
   baseURL: https://rekor.sigstore.dev
@@ -143,7 +144,7 @@ apis:
   - type: GitHubRepository
     url: https://github.com/sigstore/fulcio
 - aid: sigstore:sigstore-pubkey-api
-  name: Sigstore pubkey API
+  name: Sigstore Pubkey API
   description: The pubkey API from Sigstore — 1 operation(s) for pubkey.
   humanURL: https://docs.sigstore.dev/logging/overview/
   baseURL: https://rekor.sigstore.dev
@@ -166,7 +167,7 @@ apis:
   - type: GitHubRepository
     url: https://github.com/sigstore/fulcio
 - aid: sigstore:sigstore-tlog-api
-  name: Sigstore tlog API
+  name: Sigstore Tlog API
   description: The tlog API from Sigstore — 2 operation(s) for tlog.
   humanURL: https://docs.sigstore.dev/logging/overview/
   baseURL: https://rekor.sigstore.dev

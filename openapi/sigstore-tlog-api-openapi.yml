@@ -119,13 +119,6 @@ components:
       - treeSize
       - signedTreeHead
       - treeID
-    Error:
-      type: object
-      properties:
-        code:
-          type: integer
-        message:
-          type: string
     ConsistencyProof:
       type: object
       properties:
@@ -142,6 +135,13 @@ components:
       required:
       - rootHash
       - hashes
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+        message:
+          type: string
   responses:
     BadContent:
       description: The content supplied to the server was invalid
