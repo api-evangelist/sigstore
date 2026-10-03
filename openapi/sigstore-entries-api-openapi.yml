@@ -122,16 +122,71 @@ paths:
               $ref: '#/components/schemas/SearchLogQuery'
         required: true
 components:
+  responses:
+    UnprocessableEntity:
+      description: The server understood the request but is unable to process the contained instructions
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The content requested could not be found
+    InternalServerError:
+      description: There was an internal error in the server while processing the request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Conflict:
+      description: The request conflicts with the current state of the transparency log
+      headers:
+        Location:
+          schema:
+            type: string
+            format: uri
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadContent:
+      description: The content supplied to the server was invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
-    ProposedEntry:
+    InclusionProof:
       type: object
-      discriminator:
-        propertyName: kind
       properties:
-        kind:
+        logIndex:
+          type: integer
+          description: The index of the entry in the transparency log
+          minimum: 0
+        rootHash:
+          description: The hash value stored at the root of the merkle tree at the time the proof was generated
           type: string
+          pattern: ^[0-9a-fA-F]{64}$
+        treeSize:
+          type: integer
+          description: The size of the merkle tree at the time the inclusion proof was generated
+          minimum: 1
+        hashes:
+          description: A list of hashes required to compute the inclusion proof, sorted in order from leaf to root
+          type: array
+          items:
+            type: string
+            description: SHA256 hash value expressed in hexadecimal format
+            pattern: ^[0-9a-fA-F]{64}$
+        checkpoint:
+          type: string
+          format: signedCheckpoint
+          description: The checkpoint (signed tree head) that the inclusion proof is based on
       required:
-      - kind
+      - logIndex
+      - rootHash
+      - treeSize
+      - hashes
+      - checkpoint
     SearchLogQuery:
       type: object
       properties:
@@ -155,6 +210,15 @@ components:
           maxItems: 10
           items:
             $ref: '#/components/schemas/ProposedEntry'
+    ProposedEntry:
+      type: object
+      discriminator:
+        propertyName: kind
+      properties:
+        kind:
+          type: string
+      required:
+      - kind
     LogEntry:
       type: object
       additionalProperties:
@@ -200,67 +264,3 @@ components:
           type: integer
         message:
           type: string
-    InclusionProof:
-      type: object
-      properties:
-        logIndex:
-          type: integer
-          description: The index of the entry in the transparency log
-          minimum: 0
-        rootHash:
-          description: The hash value stored at the root of the merkle tree at the time the proof was generated
-          type: string
-          pattern: ^[0-9a-fA-F]{64}$
-        treeSize:
-          type: integer
-          description: The size of the merkle tree at the time the inclusion proof was generated
-          minimum: 1
-        hashes:
-          description: A list of hashes required to compute the inclusion proof, sorted in order from leaf to root
-          type: array
-          items:
-            type: string
-            description: SHA256 hash value expressed in hexadecimal format
-            pattern: ^[0-9a-fA-F]{64}$
-        checkpoint:
-          type: string
-          format: signedCheckpoint
-          description: The checkpoint (signed tree head) that the inclusion proof is based on
-      required:
-      - logIndex
-      - rootHash
-      - treeSize
-      - hashes
-      - checkpoint
-  responses:
-    BadContent:
-      description: The content supplied to the server was invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: The content requested could not be found
-    UnprocessableEntity:
-      description: The server understood the request but is unable to process the contained instructions
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Conflict:
-      description: The request conflicts with the current state of the transparency log
-      headers:
-        Location:
-          schema:
-            type: string
-            format: uri
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    InternalServerError:
-      description: There was an internal error in the server while processing the request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'

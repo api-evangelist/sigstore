@@ -41,14 +41,14 @@ paths:
         required: true
 components:
   responses:
-    BadContent:
-      description: The content supplied to the server was invalid
+    InternalServerError:
+      description: There was an internal error in the server while processing the request
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    InternalServerError:
-      description: There was an internal error in the server while processing the request
+    BadContent:
+      description: The content supplied to the server was invalid
       content:
         application/json:
           schema:
