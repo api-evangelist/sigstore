@@ -40,19 +40,6 @@ paths:
               $ref: '#/components/schemas/SearchIndex'
         required: true
 components:
-  responses:
-    InternalServerError:
-      description: There was an internal error in the server while processing the request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadContent:
-      description: The content supplied to the server was invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
     Error:
       type: object
@@ -91,3 +78,16 @@ components:
           enum:
           - and
           - or
+  responses:
+    InternalServerError:
+      description: There was an internal error in the server while processing the request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadContent:
+      description: The content supplied to the server was invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'

@@ -66,23 +66,27 @@ paths:
         default:
           $ref: '#/components/responses/InternalServerError'
 components:
+  responses:
+    InternalServerError:
+      description: There was an internal error in the server while processing the request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadContent:
+      description: The content supplied to the server was invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
-    ConsistencyProof:
+    Error:
       type: object
       properties:
-        rootHash:
+        code:
+          type: integer
+        message:
           type: string
-          description: The hash value stored at the root of the merkle tree at the time the proof was generated
-          pattern: ^[0-9a-fA-F]{64}$
-        hashes:
-          type: array
-          items:
-            type: string
-            description: SHA256 hash value expressed in hexadecimal format
-            pattern: ^[0-9a-fA-F]{64}$
-      required:
-      - rootHash
-      - hashes
     InactiveShardLogInfo:
       type: object
       properties:
@@ -107,6 +111,22 @@ components:
       - treeSize
       - signedTreeHead
       - treeID
+    ConsistencyProof:
+      type: object
+      properties:
+        rootHash:
+          type: string
+          description: The hash value stored at the root of the merkle tree at the time the proof was generated
+          pattern: ^[0-9a-fA-F]{64}$
+        hashes:
+          type: array
+          items:
+            type: string
+            description: SHA256 hash value expressed in hexadecimal format
+            pattern: ^[0-9a-fA-F]{64}$
+      required:
+      - rootHash
+      - hashes
     LogInfo:
       type: object
       properties:
@@ -135,23 +155,3 @@ components:
       - treeSize
       - signedTreeHead
       - treeID
-    Error:
-      type: object
-      properties:
-        code:
-          type: integer
-        message:
-          type: string
-  responses:
-    InternalServerError:
-      description: There was an internal error in the server while processing the request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadContent:
-      description: The content supplied to the server was invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'

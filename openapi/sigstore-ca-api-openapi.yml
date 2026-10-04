@@ -79,6 +79,125 @@ paths:
       - CA
 components:
   schemas:
+    fulciov2CreateSigningCertificateRequest:
+      type: object
+      properties:
+        credentials:
+          $ref: '#/components/schemas/v2Credentials'
+          title: Identity information about who possesses the private / public key pair presented
+        publicKeyRequest:
+          $ref: '#/components/schemas/v2PublicKeyRequest'
+          description: 'The public key to be stored in the requested certificate along with a signed
+
+            challenge as proof of possession of the private key.'
+        certificateSigningRequest:
+          type: string
+          format: byte
+          description: 'Contains the public key to be stored in the requested certificate. All other CSR fields
+
+            are ignored. Since the CSR is self-signed, it also acts as a proof of possession of
+
+            the private key.
+
+
+            In particular, the CSR''s subject name is not verified, or tested for
+
+            compatibility with its specified X.509 name type (e.g. email address).'
+          title: PKCS#10 PEM-encoded certificate signing request
+      required:
+      - credentials
+      - publicKeyRequest
+      - certificateSigningRequest
+    v2PublicKeyRequest:
+      type: object
+      properties:
+        publicKey:
+          $ref: '#/components/schemas/fulciov2PublicKey'
+          title: The public key to be stored in the requested certificate
+        proofOfPossession:
+          type: string
+          format: byte
+          description: This is a currently a signature over the `sub` claim from the OIDC identity token
+          title: Proof that the client possesses the private key; must be verifiable by provided public key
+      required:
+      - publicKey
+      - proofOfPossession
+    v2CertificateChain:
+      type: object
+      properties:
+        certificates:
+          type: array
+          items:
+            type: string
+          description: The PEM-encoded certificate chain, ordered from leaf to intermediate to root as applicable.
+    v2Configuration:
+      type: object
+      properties:
+        issuers:
+          type: array
+          items:
+            type: object
+            $ref: '#/components/schemas/v2OIDCIssuer'
+          description: The OIDC issuers supported by this Fulcio instance.
+      description: The configuration for the Fulcio instance.
+    rpcStatus:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+        details:
+          type: array
+          items:
+            type: object
+            $ref: '#/components/schemas/protobufAny'
+    v2Credentials:
+      type: object
+      properties:
+        oidcIdentityToken:
+          type: string
+          title: The OIDC token that identifies the caller
+    v2SigningCertificate:
+      type: object
+      properties:
+        signedCertificateDetachedSct:
+          $ref: '#/components/schemas/v2SigningCertificateDetachedSCT'
+        signedCertificateEmbeddedSct:
+          $ref: '#/components/schemas/v2SigningCertificateEmbeddedSCT'
+    fulciov2PublicKey:
+      type: object
+      properties:
+        algorithm:
+          $ref: '#/components/schemas/v2PublicKeyAlgorithm'
+          title: The cryptographic algorithm to use with the key material
+        content:
+          type: string
+          description: 'PKIX, ASN.1 DER or PEM-encoded public key. PEM is typically
+
+            of type PUBLIC KEY.'
+      required:
+      - content
+    v2TrustBundle:
+      type: object
+      properties:
+        chains:
+          type: array
+          items:
+            type: object
+            $ref: '#/components/schemas/v2CertificateChain'
+          description: 'The set of PEM-encoded certificate chains for this Fulcio instance; each chain will start with any
+
+            intermediate certificates (if present), finishing with the root certificate.'
+    v2PublicKeyAlgorithm:
+      type: string
+      enum:
+      - PUBLIC_KEY_ALGORITHM_UNSPECIFIED
+      - RSA_PSS
+      - ECDSA
+      - ED25519
+      default: PUBLIC_KEY_ALGORITHM_UNSPECIFIED
     v2SigningCertificateDetachedSCT:
       type: object
       properties:
@@ -103,36 +222,6 @@ components:
             The SCT format is an AddChainResponse struct, defined in
 
             https://github.com/google/certificate-transparency-go'
-    fulciov2PublicKey:
-      type: object
-      properties:
-        algorithm:
-          $ref: '#/components/schemas/v2PublicKeyAlgorithm'
-          title: The cryptographic algorithm to use with the key material
-        content:
-          type: string
-          description: 'PKIX, ASN.1 DER or PEM-encoded public key. PEM is typically
-
-            of type PUBLIC KEY.'
-      required:
-      - content
-    v2Credentials:
-      type: object
-      properties:
-        oidcIdentityToken:
-          type: string
-          title: The OIDC token that identifies the caller
-    v2TrustBundle:
-      type: object
-      properties:
-        chains:
-          type: array
-          items:
-            type: object
-            $ref: '#/components/schemas/v2CertificateChain'
-          description: 'The set of PEM-encoded certificate chains for this Fulcio instance; each chain will start with any
-
-            intermediate certificates (if present), finishing with the root certificate.'
     v2OIDCIssuer:
       type: object
       properties:
@@ -165,60 +254,6 @@ components:
 
             Only applicable to email-type issuers from trusted internal identity providers.'
       description: Metadata about an OIDC issuer.
-    v2Configuration:
-      type: object
-      properties:
-        issuers:
-          type: array
-          items:
-            type: object
-            $ref: '#/components/schemas/v2OIDCIssuer'
-          description: The OIDC issuers supported by this Fulcio instance.
-      description: The configuration for the Fulcio instance.
-    fulciov2CreateSigningCertificateRequest:
-      type: object
-      properties:
-        credentials:
-          $ref: '#/components/schemas/v2Credentials'
-          title: Identity information about who possesses the private / public key pair presented
-        publicKeyRequest:
-          $ref: '#/components/schemas/v2PublicKeyRequest'
-          description: 'The public key to be stored in the requested certificate along with a signed
-
-            challenge as proof of possession of the private key.'
-        certificateSigningRequest:
-          type: string
-          format: byte
-          description: 'Contains the public key to be stored in the requested certificate. All other CSR fields
-
-            are ignored. Since the CSR is self-signed, it also acts as a proof of possession of
-
-            the private key.
-
-
-            In particular, the CSR''s subject name is not verified, or tested for
-
-            compatibility with its specified X.509 name type (e.g. email address).'
-          title: PKCS#10 PEM-encoded certificate signing request
-      required:
-      - credentials
-      - publicKeyRequest
-      - certificateSigningRequest
-    v2CertificateChain:
-      type: object
-      properties:
-        certificates:
-          type: array
-          items:
-            type: string
-          description: The PEM-encoded certificate chain, ordered from leaf to intermediate to root as applicable.
-    v2SigningCertificate:
-      type: object
-      properties:
-        signedCertificateDetachedSct:
-          $ref: '#/components/schemas/v2SigningCertificateDetachedSCT'
-        signedCertificateEmbeddedSct:
-          $ref: '#/components/schemas/v2SigningCertificateEmbeddedSCT'
     protobufAny:
       type: object
       properties:
@@ -245,41 +280,6 @@ components:
             verify inclusion of the certificate in a log. The SCT format is a SignedCertificateTimestampList,
 
             as defined in https://datatracker.ietf.org/doc/html/rfc6962#section-3.3'
-    v2PublicKeyAlgorithm:
-      type: string
-      enum:
-      - PUBLIC_KEY_ALGORITHM_UNSPECIFIED
-      - RSA_PSS
-      - ECDSA
-      - ED25519
-      default: PUBLIC_KEY_ALGORITHM_UNSPECIFIED
-    rpcStatus:
-      type: object
-      properties:
-        code:
-          type: integer
-          format: int32
-        message:
-          type: string
-        details:
-          type: array
-          items:
-            type: object
-            $ref: '#/components/schemas/protobufAny'
-    v2PublicKeyRequest:
-      type: object
-      properties:
-        publicKey:
-          $ref: '#/components/schemas/fulciov2PublicKey'
-          title: The public key to be stored in the requested certificate
-        proofOfPossession:
-          type: string
-          format: byte
-          description: This is a currently a signature over the `sub` claim from the OIDC identity token
-          title: Proof that the client possesses the private key; must be verifiable by provided public key
-      required:
-      - publicKey
-      - proofOfPossession
 externalDocs:
   description: More about Fulcio
   url: https://github.com/sigstore/fulcio
