@@ -122,7 +122,48 @@ paths:
               $ref: '#/components/schemas/SearchLogQuery'
         required: true
 components:
+  responses:
+    Conflict:
+      description: The request conflicts with the current state of the transparency log
+      headers:
+        Location:
+          schema:
+            type: string
+            format: uri
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    InternalServerError:
+      description: There was an internal error in the server while processing the request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    UnprocessableEntity:
+      description: The server understood the request but is unable to process the contained instructions
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The content requested could not be found
+    BadContent:
+      description: The content supplied to the server was invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
+    ProposedEntry:
+      type: object
+      discriminator:
+        propertyName: kind
+      properties:
+        kind:
+          type: string
+      required:
+      - kind
     SearchLogQuery:
       type: object
       properties:
@@ -146,53 +187,6 @@ components:
           maxItems: 10
           items:
             $ref: '#/components/schemas/ProposedEntry'
-    LogEntry:
-      type: object
-      additionalProperties:
-        type: object
-        properties:
-          logID:
-            type: string
-            pattern: ^[0-9a-fA-F]{64}$
-            description: This is the SHA256 hash of the DER-encoded public key for the log at the time the entry was included in the log
-          logIndex:
-            type: integer
-            minimum: 0
-          body:
-            type: object
-            additionalProperties: true
-          integratedTime:
-            type: integer
-            description: The time the entry was added to the log as a Unix timestamp in seconds
-          attestation:
-            type: object
-            properties:
-              data:
-                format: byte
-            format: byte
-          verification:
-            type: object
-            properties:
-              inclusionProof:
-                $ref: '#/components/schemas/InclusionProof'
-              signedEntryTimestamp:
-                type: string
-                format: byte
-                description: Signature over the logID, logIndex, body and integratedTime.
-        required:
-        - logID
-        - logIndex
-        - body
-        - integratedTime
-    ProposedEntry:
-      type: object
-      discriminator:
-        propertyName: kind
-      properties:
-        kind:
-          type: string
-      required:
-      - kind
     Error:
       type: object
       properties:
@@ -232,35 +226,41 @@ components:
       - treeSize
       - hashes
       - checkpoint
-  responses:
-    NotFound:
-      description: The content requested could not be found
-    InternalServerError:
-      description: There was an internal error in the server while processing the request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    UnprocessableEntity:
-      description: The server understood the request but is unable to process the contained instructions
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Conflict:
-      description: The request conflicts with the current state of the transparency log
-      headers:
-        Location:
-          schema:
+    LogEntry:
+      type: object
+      additionalProperties:
+        type: object
+        properties:
+          logID:
             type: string
-            format: uri
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadContent:
-      description: The content supplied to the server was invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+            pattern: ^[0-9a-fA-F]{64}$
+            description: This is the SHA256 hash of the DER-encoded public key for the log at the time the entry was included in the log
+          logIndex:
+            type: integer
+            minimum: 0
+          body:
+            type: object
+            additionalProperties: true
+          integratedTime:
+            type: integer
+            description: The time the entry was added to the log as a Unix timestamp in seconds
+          attestation:
+            type: object
+            properties:
+              data:
+                format: byte
+            format: byte
+          verification:
+            type: object
+            properties:
+              inclusionProof:
+                $ref: '#/components/schemas/InclusionProof'
+              signedEntryTimestamp:
+                type: string
+                format: byte
+                description: Signature over the logID, logIndex, body and integratedTime.
+        required:
+        - logID
+        - logIndex
+        - body
+        - integratedTime
