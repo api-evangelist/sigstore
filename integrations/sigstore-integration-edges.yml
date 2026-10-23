@@ -1,12 +1,16 @@
 generated: '2026-10-14'
 method: searched
 checked:
+- artifact-hub/integrations/artifact-hub-integration-edges.yml
 - https://focus.finops.org/data-generators/
 - https://github.com/cncf/k8s-conformance
 - https://github.com/cncf/landscape
 - https://github.com/marketplace?type=actions
+- https://landscape.cd.foundation/data/full.json
+- https://plugins.jenkins.io/api/plugin/
+- https://plugins.jenkins.io/api/plugins
 - https://www.bestpractices.dev/en/projects.json
-- artifact-hub/integrations/artifact-hub-integration-edges.yml
+- https://www.bestpractices.dev/en/projects.json?page=N
 marketplace_apps: []
 edges:
 - partner_name: GitHub Marketplace (actions)
@@ -61,41 +65,6 @@ edges:
     detected: '2026-10-19'
   detected_by: sweep-cloud-native.py
   first_seen: '2026-10-15'
-- partner_name: OpenSSF Best Practices Badge
-  partner: null
-  partner_match: register
-  type: register
-  channel: standard-directory
-  relationship: standard-participant
-  direction: partner-built
-  evidence: https://www.bestpractices.dev/en/projects/5716
-  category: OpenSSF Best Practices badge (open-source project security conformance)
-  contract_reference:
-    register: OpenSSF Best Practices badge projects (bestpractices.dev/en/projects.json, paged)
-    standard: OpenSSF Best Practices Badge criteria (formerly CII Best Practices; bestpractices.dev)
-    spec_file: null
-    role: badge-holder
-    registered_name: sigstore
-    matched_by: github-org+name-among-claimants
-    matched_on: sigstore
-    certified_products:
-    - product: open-source project
-      product_type: open-source project
-      standard: OpenSSF Best Practices Badge criteria (formerly CII Best Practices; bestpractices.dev)
-      lapsed: false
-      partner_tier: passing
-      projects:
-      - name: sigstore
-        id: 5716
-        url: https://www.bestpractices.dev/en/projects/5716
-        badge_level: passing
-    signal_note: 'certified_products = ONE entry (product type: open-source project) with the highest CURRENT badge
-      level in partner_tier; a provider whose projects only lost the badge is lapsed: true; project names are context,
-      never counted; in_progress entries are not conformance'
-    detected_by: sweep-openssf-best-practices-badges.py
-    detected: '2026-10-22'
-  detected_by: sweep-openssf-best-practices-badges.py
-  first_seen: '2026-10-22'
 - partner_name: Artifact Hub (artifact-hub)
   partner: artifact-hub
   partner_match: mirror
@@ -130,5 +99,41 @@ edges:
   category: Artifact Hub listing (Container image)
   badges:
   - 'Verified publisher (Artifact Hub verified publisher: repository ownership proven)'
+- partner_name: OpenSSF Best Practices Badge (bestpractices.dev)
+  partner: null
+  partner_match: register
+  type: register
+  channel: standard-directory
+  relationship: standard-participant
+  direction: partner-built
+  evidence: https://www.bestpractices.dev/en/projects/5716
+  category: OpenSSF Best Practices badge (open-source project security practices)
+  contract_reference:
+    register: OpenSSF Best Practices Badge projects (www.bestpractices.dev/en/projects.json)
+    standard: OpenSSF Best Practices Badge criteria (passing / silver / gold)
+    spec_file: null
+    role: badged-project-owner
+    registered_name: sigstore
+    matched_domain: sigstore.dev
+    matched_by: domain+name-among-holders
+    certified_products:
+    - product: open-source project
+      product_type: open-source project
+      standard: OpenSSF Best Practices Badge criteria (passing / silver / gold)
+      partner_tier: passing
+      lapsed: false
+      badge_date: '2022-03-17'
+    badged_projects:
+    - name: sigstore
+      id: 5716
+      badge: passing
+      url: https://www.bestpractices.dev/en/projects/5716
+    signal_note: 'certified_products = ONE entry per provider (product type open-source project): highest current
+      OpenSSF Best Practices badge level in partner_tier, earliest date at that level; lapsed: true when every linked
+      project lost its badge. badged_projects is context, never counted'
+    detected_by: sweep-openssf-best-practices-badges.py
+    detected: '2026-10-22'
+  detected_by: sweep-openssf-best-practices-badges.py
+  first_seen: '2026-10-22'
 source:
 - https://github.com/marketplace?type=actions
