@@ -264,3 +264,9 @@ components:
         - logIndex
         - body
         - integratedTime
+x-provenance:
+  method: harvested
+  publisher: Sigstore
+  source: https://rekor.sigstore.dev/swagger.json
+  note: split by refine-openapis from the provider's own published document, verified by fetch (openapi/_original/*.fetch.json);
+    stamped by stamp-openapi-provenance.py (roadmap#793)
